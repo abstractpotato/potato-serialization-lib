@@ -51,6 +51,14 @@ func BlockFromCBOR(cborBytes []byte) (Block, error) {
   return block, nil
 }
 
+func BlockFromHex(hexString string) (Block, error) {
+  cborBytes, err := hex.DecodeString(hexString)
+  if err != nil { return NewBlock(), err }
+  block, err :=  BlockFromCBOR(cborBytes)
+  if err != nil { return NewBlock(), err }
+  return block, nil
+}
+
 func (block *Block) Hash() error {
   cborBytes, err := block.BodyToCBOR()
   if err != nil { return err }
