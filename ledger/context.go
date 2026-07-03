@@ -1,5 +1,11 @@
 package ledger
 
+import(
+  "github.com/fxamacker/cbor/v2"
+  "encoding/hex"
+  "encoding/json"
+)
+
 type Context struct {
   ProtocolParams Params `cbor: "protocolParams"`
   CurrentEpoch   Epoch  `cbor: "currentEpoch"`  
@@ -8,6 +14,13 @@ type Context struct {
 
 func NewContext() Context {
   return Context{}
+}
+
+func ContextFromCBOR(cborBytes []byte) (Context, error) {
+  var context Context
+  err := cbor.Unmarshal(cborBytes, &context)
+  if err != nil { return NewContext(), err }
+  return context, nil
 }
 
 func ContextFromHex(hexString string) (Context, error) {

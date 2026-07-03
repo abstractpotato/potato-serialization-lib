@@ -11,6 +11,7 @@ func main() {
   epochTest()
   blockTest()
   txTest()
+  accountTest()
 }
 
 func paramTest() {
@@ -132,4 +133,25 @@ func txTest() {
   // rebuild tx from HEX
   newTransactionHex, _ := ledger.TransactionFromHex(txHex)
   fmt.Printf("Reconstructed Transaction HEX:\n %+v\n\n", newTransactionHex)
+}
+
+func accountTest() {
+  account := ledger.NewAccount()
+  
+  fmt.Printf("Original Account:\n %+v\n\n", account)
+  
+  paramHex, _ := account.ToHex()
+  fmt.Printf("Account Hex:\n %s\n\n", paramHex)
+  
+  paramJSON, _ := account.ToJSON()
+  fmt.Printf("Account JSON:\n %s\n\n", paramJSON)
+  
+  paramCBOR, _ := account.ToCBOR()
+  fmt.Printf("Account CBOR:\n %s\n\n", paramCBOR)
+  
+  newAccountCBOR, _ := ledger.AccountFromCBOR(paramCBOR)
+  fmt.Printf("Reconstructed Account CBOR:\n %+v\n\n", newAccountCBOR)
+  
+  newAccountHex, _ := ledger.AccountFromHex(paramHex)
+  fmt.Printf("Reconstructed Account HEX:\n %+v\n\n", newAccountHex)
 }

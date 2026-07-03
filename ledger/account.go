@@ -1,12 +1,20 @@
 package ledger
 
+import(
+  "github.com/fxamacker/cbor/v2"
+  "encoding/hex"
+  "encoding/json"
+)
+
 type Account struct {
   Addr string            `cbor: "addr"`
   Assets map[string]uint `cbor: "assets"`
 }
 
 func NewAccount() Account {
-  return Account{}
+  return Account{
+    Assets: make(map[string]uint),
+  }
 }
 
 func AccountFromCBOR(cborBytes []byte) (Account, error) {
