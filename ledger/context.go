@@ -2,7 +2,7 @@ package ledger
 
 type Context struct {
   ProtocolParams Params `cbor: "protocolParams"`
-  CurrentEpoch   uint   `cbor: "currentEpoch"`  
+  CurrentEpoch   Epoch  `cbor: "currentEpoch"`  
   Tip            uint   `cbor: "tip"`
 }
 
