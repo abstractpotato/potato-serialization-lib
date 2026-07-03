@@ -21,6 +21,7 @@ type BlockHeader struct {
 }
 
 type Witness struct {
+  Validator string `cbor: "validator"`
   Signature []byte `cbor: "signature"`
 }
 
