@@ -6,8 +6,54 @@ import (
 )
 
 func main() {
-  epochTest()
-  blockTest()
+  // paramTest()
+  // poolTest()
+  // epochTest()
+  // blockTest()
+  // txText()
+}
+
+func paramTest() {
+  params := ledger.NewParams()
+  
+  fmt.Printf("Original Params:\n %+v\n\n", params)
+  
+  paramHex, _ := params.ToHex()
+  fmt.Printf("Params Hex:\n %s\n\n", paramHex)
+  
+  paramJSON, _ := params.ToJSON()
+  fmt.Printf("Params JSON:\n %s\n\n", paramJSON)
+  
+  paramCBOR, _ := params.ToCBOR()
+  fmt.Printf("Params CBOR:\n %s\n\n", paramCBOR)
+  
+  newParamsCBOR, _ := ledger.ParamsFromCBOR(paramCBOR)
+  fmt.Printf("Reconstructed Params CBOR:\n %+v\n\n", newParamsCBOR)
+  
+  newParamsHex, _ := ledger.ParamsFromHex(paramHex)
+  fmt.Printf("Reconstructed Params HEX:\n %+v\n\n", newParamsHex)
+}
+
+func poolTest()  {
+  pool := ledger.NewPool()
+  
+  fmt.Printf("Original Pool:\n %+v\n\n", pool)
+  
+  poolHex, _ := pool.ToHex()
+  fmt.Printf("Pool Hex:\n %s\n\n", poolHex)
+  
+  poolJSON, _ := pool.ToJSON()
+  fmt.Printf("Pool JSON:\n %s\n\n", poolJSON)
+  
+  poolCBOR, _ := pool.ToCBOR()
+  fmt.Printf("Pool CBOR:\n %s\n\n", poolCBOR)
+  
+  newPoolCBOR, _ := ledger.PoolFromCBOR(poolCBOR)
+  fmt.Printf("Reconstructed Pool CBOR:\n %+v\n\n", newPoolCBOR)
+  
+  newPoolHex, _ := ledger.PoolFromHex(poolHex)
+  fmt.Printf("Reconstructed Pool HEX:\n %+v\n\n", newPoolHex)
+  
 }
 
 func epochTest() {
@@ -60,4 +106,8 @@ func blockTest() {
   // rebuild block from HEX
   newBlockHex, _ := ledger.BlockFromHex(blockHex)
   fmt.Printf("Reconstructed Block HEX:\n %+v\n\n", newBlockHex)
+}
+
+func txText() {
+  
 }
