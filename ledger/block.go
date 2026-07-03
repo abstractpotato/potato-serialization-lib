@@ -33,7 +33,7 @@ func (block *Block) ToCBOR() ([]byte, error) {
   if err != nil { return []byte, err }
   return cborBytes, nil
 }
-
+ 
 func (block *Block) BodyToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(block.Body)
   if err != nil { return []byte, err }
