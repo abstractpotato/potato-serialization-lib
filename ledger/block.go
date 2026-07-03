@@ -12,9 +12,13 @@ type Block struct {
 }
 
 type BlockHeader struct {
-  ID        uint   `cbor: "id"`
-  Hash      string `cbor: "hash"`
-  Pool      string `cbor: "pool"`
+  ID        uint      `cbor: "id"`
+  Hash      string    `cbor: "hash"`
+  Pool      string    `cbor: "pool"`
+  Witnesses []Witness `cbor: "witness"`
+}
+
+type Witness struct {
   Signature []byte `cbor: "signature"`
 }
 
@@ -33,7 +37,7 @@ func (block *Block) ToCBOR() ([]byte, error) {
   if err != nil { return []byte, err }
   return cborBytes, nil
 }
- 
+
 func (block *Block) BodyToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(block.Body)
   if err != nil { return []byte, err }
