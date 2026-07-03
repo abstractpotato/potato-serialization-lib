@@ -4,6 +4,7 @@ import(
   "fmt"
   "crypto/sha256"
   "github.com/fxamacker/cbor/v2"
+  "encoding/hex"
 )
 
 type Block struct {
@@ -14,7 +15,7 @@ type Block struct {
 type BlockHeader struct {
   ID        uint      `cbor: "id"`
   Hash      string    `cbor: "hash"`
-  Pool      string    `cbor: "pool"`
+  Pool      string    `cbor: "poolId"`
   Witnesses []Witness `cbor: "witness"`
 }
 
@@ -32,16 +33,22 @@ type BlockBody struct {
   Timestamp    uint          `cbor: "timestamp"`
 }
 
-func (block *Block) ToCBOR() ([]byte, error) {
-  cborBytes, err := cbor.Marshal(block)
-  if err != nil { return []byte, err }
-  return cborBytes, nil
+func NewBlock() Block {
+  return Block{
+    Header: BlockHeader{
+      Witnesses: make([]Witness, 0),
+    },
+    Body: BlockBody{
+      Transactions: make([]Transaction, 0),
+    },
+  }
 }
 
-func (block *Block) BodyToCBOR() ([]byte, error) {
-  cborBytes, err := cbor.Marshal(block.Body)
-  if err != nil { return []byte, err }
-  return cborBytes, nil
+func BlockFromCBOR(cborBytes []byte) (Block, error) {
+  var block Block
+  err := cbor.Unmarshal(cborBytes, &block)
+  if err != nil { return NewBlock(), err }
+  return block, nil
 }
 
 func (block *Block) Hash() error {
@@ -50,3 +57,22 @@ func (block *Block) Hash() error {
   block.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
   return nil
 }
+
+func (block *Block) ToCBOR() ([]byte, error) {
+  cborBytes, err := cbor.Marshal(block)
+  if err != nil { return nil, err }
+  return cborBytes, nil
+}
+
+func (block *Block) ToHex() (string, error) {
+  cborBytes, err := block.ToCBOR()
+  if err != nil { return "", err }
+  return hex.EncodeToString(cborBytes), nil
+}
+
+func (block *Block) BodyToCBOR() ([]byte, error) {
+  cborBytes, err := cbor.Marshal(block.Body)
+  if err != nil { return nil, err }
+  return cborBytes, nil
+}
+
