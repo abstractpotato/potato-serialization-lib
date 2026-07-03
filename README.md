@@ -8,7 +8,7 @@ go get github.com/abstractpotato/potato-serialization-lib
 
 In Go code
 ```go
-import "github.com/potato-serialization-lib/ledger"
+import "github.com/potato-serialization-lib/psl"
 ```
 
 <!-- ## Documentation -->
