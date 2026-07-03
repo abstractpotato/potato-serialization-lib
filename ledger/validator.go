@@ -7,9 +7,8 @@ import(
 )
 
 type Validator struct {
-  ID             string   `cbor: "id"`
   Addr           string   `cbor: "addr"`
-  Certificate    string   `cbor: "certificate"`
+  CertificateTx  string   `cbor: "certificate"`
   Relays         []string `cbor: "relays"`
   Status         uint     `cbor: "status"`
 }

@@ -20,7 +20,7 @@ type EpochHeader struct {
 
 type EpochBody struct {
   PreviousHash    string   `cbor: "previousHash"`
-  Pools           []string `cbor: "pools"`
+  Validators      []string `cbor: "pools"`
   StartTime       uint     `cbor: "startTime"`
   EndTime         uint     `cbor: "endTime"`
   ProtocolVersion uint     `cbor: "protocolVersion"`
@@ -30,7 +30,7 @@ func NewEpoch() Epoch {
   return Epoch{
     Header: EpochHeader{},
     Body: EpochBody{
-      Pools: make([]string, 0),
+      Validators: make([]string, 0),
     },
   }
 }

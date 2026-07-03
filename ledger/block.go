@@ -16,7 +16,7 @@ type Block struct {
 type BlockHeader struct {
   ID        uint      `cbor: "id"`
   Hash      string    `cbor: "hash"`
-  Pool      string    `cbor: "poolId"`
+  Validator string    `cbor: "validator"`
   Witnesses []Witness `cbor: "witness"`
 }
 
