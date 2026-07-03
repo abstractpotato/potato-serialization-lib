@@ -1,4 +1,4 @@
-module potato-serialization-lib
+module github.com/abstractpotato/potato-serialization-lib
 
 go 1.25.8
 
