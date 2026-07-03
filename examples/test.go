@@ -1,11 +1,11 @@
-package test
+package main
 
 import (
   "fmt"
   "github.com/abstractpotato/potato-serialization-lib/psl"
 )
 
-func run() {
+func main() {
   paramTest()
   validatorTest()
   epochTest()
