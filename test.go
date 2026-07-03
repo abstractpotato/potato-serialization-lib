@@ -22,6 +22,10 @@ func blockTest() {
   fmt.Printf("Block CBOR:\n %s\n", blockCBOR)
   
   // rebuild struct from CBOR
-  newBlock, _ := ledger.BlockFromCBOR(blockCBOR)
-  fmt.Printf("Reconstructed Block:\n %+v\n", newBlock)
+  newBlockCBOR, _ := ledger.BlockFromCBOR(blockCBOR)
+  fmt.Printf("Reconstructed Block CBOR:\n %+v\n", newBlockCBOR)
+  
+  // rebuild block from HEX
+  newBlockHEX, _ := ledger.BlockFromHex(blockHEX)
+  fmt.Printf("Reconstructed Block HEX:\n %+v\n", newBlockHEX)
 }
