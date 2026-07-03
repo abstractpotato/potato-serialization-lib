@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-  // paramTest()
-  // poolTest()
-  // epochTest()
-  // blockTest()
-  // txText()
+  paramTest()
+  poolTest()
+  epochTest()
+  blockTest()
+  txTest()
 }
 
 func paramTest() {
@@ -108,6 +108,28 @@ func blockTest() {
   fmt.Printf("Reconstructed Block HEX:\n %+v\n\n", newBlockHex)
 }
 
-func txText() {
+func txTest() {
+  tx := ledger.NewTransaction()
+  tx.Hash()
   
+  fmt.Printf("Original Transaction:\n %+v\n\n", tx)
+  
+  txHex, _ := tx.ToHex()
+  fmt.Printf("Transaction Hex:\n %s\n\n", txHex)
+  
+  // to json 
+  txJSON, _ := tx.ToJSON()
+  fmt.Printf("Transaction JSON:\n %s\n\n", txJSON)
+  
+  // Convert struct to CBOR
+  txCBOR, _ := tx.ToCBOR()
+  fmt.Printf("Transaction CBOR:\n %s\n\n", txCBOR)
+  
+  // rebuild struct from CBOR
+  newTransactionCBOR, _ := ledger.TransactionFromCBOR(txCBOR)
+  fmt.Printf("Reconstructed Transaction CBOR:\n %+v\n\n", newTransactionCBOR)
+  
+  // rebuild tx from HEX
+  newTransactionHex, _ := ledger.TransactionFromHex(txHex)
+  fmt.Printf("Reconstructed Transaction HEX:\n %+v\n\n", newTransactionHex)
 }
