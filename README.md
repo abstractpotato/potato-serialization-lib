@@ -6,6 +6,12 @@ Import into go project
 go get github.com/abstractpotato/potato-serialization-lib
 ```
 
+In Go Files
+```go
+import "github.com/potato-serialization-lib"
+```
+
+
 ## Documentation
 [Click Here](https://starch.one/docs/starch_pay)
 
