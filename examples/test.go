@@ -5,7 +5,7 @@ import (
   "github.com/abstractpotato/potato-serialization-lib/psl"
 )
 
-func main() {
+func run() {
   paramTest()
   validatorTest()
   epochTest()
