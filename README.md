@@ -1,5 +1,13 @@
 # Potato Serialization Lib
 This is a library written in Go, for serialization & deserialization of data structures used in StarchPay's Go implementation.
 
-# Documentation
+Import into go project
+```
+go get github.com/abstractpotato/potato-serialization-lib
+```
+
+## Documentation
 Coming soon...
+
+## Core maintainers:
+[Abstract Potato](https://github.com/abstractpotato)
