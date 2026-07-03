@@ -7,7 +7,7 @@ go get github.com/abstractpotato/potato-serialization-lib
 ```
 
 ## Documentation
-Coming soon...
+[Click Here](https://starch.one/docs/starch_pay)
 
 ## Core maintainers:
 [Abstract Potato](https://github.com/abstractpotato)
