@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "potato-serialization-lib/ledger"
+  "github.com/abstractpotato/potato-serialization-lib/ledger"
 )
 
 // this is an example of a hard coded genesis block

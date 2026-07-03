@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "potato-serialization-lib/ledger"
+  "github.com/abstractpotato/potato-serialization-lib/ledger"
 )
 
 func main() {
