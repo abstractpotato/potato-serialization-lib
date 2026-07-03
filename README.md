@@ -11,9 +11,8 @@ In Go Files
 import "github.com/potato-serialization-lib"
 ```
 
-
-## Documentation
-[Click Here](https://starch.one/docs/starch_pay)
+<!-- ## Documentation -->
+<!-- [Click Here](https://starch.one/docs/starch_pay) -->
 
 ## Core maintainers:
 [Abstract Potato](https://github.com/abstractpotato)
