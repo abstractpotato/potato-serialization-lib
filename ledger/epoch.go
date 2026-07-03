@@ -11,7 +11,7 @@ import(
 type Epoch struct {
   Header EpochHeader `cbor: "header"`
   Body   EpochBody   `cbor: "body"`
-} 
+}
 
 type EpochHeader struct {
   ID   uint   `cbor: "id"`
@@ -30,12 +30,12 @@ func NewEpoch() Epoch {
   return Epoch{
     Header: EpochHeader{},
     Body: EpochBody{
-      Pools: make([]Pool, 0),
+      Pools: make([]string, 0),
     },
   }
 }
 
-func EpochFromCBOR(cborBytes, []byte) (Epoch, error) {
+func EpochFromCBOR(cborBytes []byte) (Epoch, error) {
   var epoch Epoch
   err := cbor.Unmarshal(cborBytes, &epoch)
   if err != nil { return NewEpoch(), err }
@@ -63,7 +63,7 @@ func (epoch *Epoch) ToHex() (string, error) {
 }
 
 func (epoch *Epoch) ToJSON() ([]byte, error) {
-  jsonBytes, err := json.Marshal(block)
+  jsonBytes, err := json.Marshal(epoch)
   if err != nil { return nil, err }
   return jsonBytes, nil
 }
@@ -78,4 +78,5 @@ func (epoch *Epoch) Hash() error {
   cborBytes, err := epoch.BodyToCBOR()
   if err != nil { return err }
   epoch.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
+  return nil
 }
