@@ -5,6 +5,7 @@ import(
   "crypto/sha256"
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
+  "encoding/json"
 )
 
 type Block struct {
@@ -76,6 +77,12 @@ func (block *Block) ToHex() (string, error) {
   cborBytes, err := block.ToCBOR()
   if err != nil { return "", err }
   return hex.EncodeToString(cborBytes), nil
+}
+
+func (block *Block) ToJSON() ([]byte, error) {
+  jsonData, err := json.Marshal(block)
+  if err != nil { return nil, err }
+  return jsonData, nil
 }
 
 func (block *Block) BodyToCBOR() ([]byte, error) {
