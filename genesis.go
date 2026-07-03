@@ -2,7 +2,7 @@ package genesis
 
 import (
   "fmt"
-  "github.com/abstractpotato/potato-serialization-lib/ledger"
+  "github.com/abstractpotato/potato-serialization-lib/psl"
 )
 
 // this is an example of a hard coded genesis block
@@ -10,7 +10,7 @@ import (
 
 func main() {
   // genesis validator used to sign the transaction and block
-  validator := ledger.NewValidator()
+  validator := psl.NewValidator()
   validator.Addr = "test_addr"
   validator.CertificateTx = "genesis"
   validator.Relays = append(validator.Relays, "http://0.0.0.0:5001")
@@ -19,7 +19,7 @@ func main() {
   fmt.Printf("Genesis Validator:\n %s\n\n", validatorJSON)
 
   // initital protocol parameters
-  params := ledger.NewParams()
+  params := psl.NewParams()
   params.Network = 0
   params.MaxBlockHeaderSize = 256
   params.MaxBlockBodySize = 2048000000
@@ -32,7 +32,7 @@ func main() {
   fmt.Printf("Genesis Params:\n %+s\n\n", paramsJSON)
 
   //
-  epoch := ledger.NewEpoch()
+  epoch := psl.NewEpoch()
   epoch.Header.ID = 0
   epoch.Body.StartTime = 0
   epoch.Body.EndTime = epoch.Body.StartTime + params.SlotsPerEpoch
@@ -43,21 +43,21 @@ func main() {
   fmt.Printf("Genesis Epoch:\n %+v\n\n", epoch)
 
   // convert validator to cbor and format into TxData
-  validatorData := ledger.TxData{}
+  validatorData := psl.TxData{}
   validatorData.Tag = "genesis_validator"
   validatorCBOR, _ := validator.ToCBOR()
   validatorData.Data = validatorCBOR
   validatorData.Type = 0
 
   // convert parameters to cbor and format into TxData
-  paramsData := ledger.TxData{}
+  paramsData := psl.TxData{}
   paramsData.Tag = "genesis_params"
   paramsCBOR, _ := params.ToCBOR()
   paramsData.Data = paramsCBOR
   paramsData.Type = 0
 
   // add data into transaction body
-  transaction := ledger.NewTransaction()
+  transaction := psl.NewTransaction()
   transaction.Body.Data = append(transaction.Body.Data, validatorData)
   transaction.Body.Data = append(transaction.Body.Data, paramsData)
   transaction.Hash() // generate transaction hash
@@ -66,7 +66,7 @@ func main() {
   fmt.Printf("Genesis Transaction:\n %s\n\n", txJSON)
 
   // add transaction into block body
-  block := ledger.NewBlock()
+  block := psl.NewBlock()
   block.Header.ID = 0
   block.Header.Validator = validator.Addr
   // add validator signature as witness

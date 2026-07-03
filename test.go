@@ -2,7 +2,7 @@ package test
 
 import (
   "fmt"
-  "github.com/abstractpotato/potato-serialization-lib/ledger"
+  "github.com/abstractpotato/potato-serialization-lib/psl"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 }
 
 func paramTest() {
-  params := ledger.NewParams()
+  params := psl.NewParams()
 
   fmt.Printf("Original Params:\n %+v\n\n", params)
 
@@ -28,15 +28,15 @@ func paramTest() {
   paramCBOR, _ := params.ToCBOR()
   fmt.Printf("Params CBOR:\n %s\n\n", paramCBOR)
 
-  newParamsCBOR, _ := ledger.ParamsFromCBOR(paramCBOR)
+  newParamsCBOR, _ := psl.ParamsFromCBOR(paramCBOR)
   fmt.Printf("Reconstructed Params CBOR:\n %+v\n\n", newParamsCBOR)
 
-  newParamsHex, _ := ledger.ParamsFromHex(paramHex)
+  newParamsHex, _ := psl.ParamsFromHex(paramHex)
   fmt.Printf("Reconstructed Params HEX:\n %+v\n\n", newParamsHex)
 }
 
 func validatorTest()  {
-  validator := ledger.NewValidator()
+  validator := psl.NewValidator()
 
   fmt.Printf("Original Validator:\n %+v\n\n", validator)
 
@@ -49,16 +49,16 @@ func validatorTest()  {
   validatorCBOR, _ := validator.ToCBOR()
   fmt.Printf("Validator CBOR:\n %s\n\n", validatorCBOR)
 
-  newValidatorCBOR, _ := ledger.ValidatorFromCBOR(validatorCBOR)
+  newValidatorCBOR, _ := psl.ValidatorFromCBOR(validatorCBOR)
   fmt.Printf("Reconstructed Validator CBOR:\n %+v\n\n", newValidatorCBOR)
 
-  newValidatorHex, _ := ledger.ValidatorFromHex(validatorHex)
+  newValidatorHex, _ := psl.ValidatorFromHex(validatorHex)
   fmt.Printf("Reconstructed Validator HEX:\n %+v\n\n", newValidatorHex)
 
 }
 
 func epochTest() {
-  epoch := ledger.NewEpoch()
+  epoch := psl.NewEpoch()
   epoch.Hash()
 
   fmt.Printf("Original Epoch:\n %+v\n\n", epoch)
@@ -75,16 +75,16 @@ func epochTest() {
   fmt.Printf("Epoch CBOR:\n %s\n\n", epochCBOR)
 
   // rebuild struct from CBOR
-  newEpochCBOR, _ := ledger.EpochFromCBOR(epochCBOR)
+  newEpochCBOR, _ := psl.EpochFromCBOR(epochCBOR)
   fmt.Printf("Reconstructed Epoch CBOR:\n %+v\n\n", newEpochCBOR)
 
   // rebuild epoch from HEX
-  newEpochHex, _ := ledger.EpochFromHex(epochHex)
+  newEpochHex, _ := psl.EpochFromHex(epochHex)
   fmt.Printf("Reconstructed Epoch HEX:\n %+v\n\n", newEpochHex)
 }
 
 func blockTest() {
-  block := ledger.NewBlock()
+  block := psl.NewBlock()
   block.Hash()
 
   fmt.Printf("Original Block:\n %+v\n\n", block)
@@ -101,16 +101,16 @@ func blockTest() {
   fmt.Printf("Block CBOR:\n %s\n\n", blockCBOR)
 
   // rebuild struct from CBOR
-  newBlockCBOR, _ := ledger.BlockFromCBOR(blockCBOR)
+  newBlockCBOR, _ := psl.BlockFromCBOR(blockCBOR)
   fmt.Printf("Reconstructed Block CBOR:\n %+v\n\n", newBlockCBOR)
 
   // rebuild block from HEX
-  newBlockHex, _ := ledger.BlockFromHex(blockHex)
+  newBlockHex, _ := psl.BlockFromHex(blockHex)
   fmt.Printf("Reconstructed Block HEX:\n %+v\n\n", newBlockHex)
 }
 
 func txTest() {
-  tx := ledger.NewTransaction()
+  tx := psl.NewTransaction()
   tx.Hash()
 
   fmt.Printf("Original Transaction:\n %+v\n\n", tx)
@@ -127,16 +127,16 @@ func txTest() {
   fmt.Printf("Transaction CBOR:\n %s\n\n", txCBOR)
 
   // rebuild struct from CBOR
-  newTransactionCBOR, _ := ledger.TransactionFromCBOR(txCBOR)
+  newTransactionCBOR, _ := psl.TransactionFromCBOR(txCBOR)
   fmt.Printf("Reconstructed Transaction CBOR:\n %+v\n\n", newTransactionCBOR)
 
   // rebuild tx from HEX
-  newTransactionHex, _ := ledger.TransactionFromHex(txHex)
+  newTransactionHex, _ := psl.TransactionFromHex(txHex)
   fmt.Printf("Reconstructed Transaction HEX:\n %+v\n\n", newTransactionHex)
 }
 
 func accountTest() {
-  account := ledger.NewAccount()
+  account := psl.NewAccount()
 
   fmt.Printf("Original Account:\n %+v\n\n", account)
 
@@ -149,9 +149,9 @@ func accountTest() {
   paramCBOR, _ := account.ToCBOR()
   fmt.Printf("Account CBOR:\n %s\n\n", paramCBOR)
 
-  newAccountCBOR, _ := ledger.AccountFromCBOR(paramCBOR)
+  newAccountCBOR, _ := psl.AccountFromCBOR(paramCBOR)
   fmt.Printf("Reconstructed Account CBOR:\n %+v\n\n", newAccountCBOR)
 
-  newAccountHex, _ := ledger.AccountFromHex(paramHex)
+  newAccountHex, _ := psl.AccountFromHex(paramHex)
   fmt.Printf("Reconstructed Account HEX:\n %+v\n\n", newAccountHex)
 }
