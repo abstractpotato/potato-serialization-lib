@@ -60,13 +60,6 @@ func BlockFromHex(hexString string) (Block, error) {
   return block, nil
 }
 
-func (block *Block) Hash() error {
-  cborBytes, err := block.BodyToCBOR()
-  if err != nil { return err }
-  block.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
-  return nil
-}
-
 func (block *Block) ToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(block)
   if err != nil { return nil, err }
@@ -80,9 +73,9 @@ func (block *Block) ToHex() (string, error) {
 }
 
 func (block *Block) ToJSON() ([]byte, error) {
-  jsonData, err := json.Marshal(block)
+  jsonBytes, err := json.Marshal(block)
   if err != nil { return nil, err }
-  return jsonData, nil
+  return jsonBytes, nil
 }
 
 func (block *Block) BodyToCBOR() ([]byte, error) {
@@ -91,3 +84,9 @@ func (block *Block) BodyToCBOR() ([]byte, error) {
   return cborBytes, nil
 }
 
+func (block *Block) Hash() error {
+  cborBytes, err := block.BodyToCBOR()
+  if err != nil { return err }
+  block.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
+  return nil
+}
