@@ -27,7 +27,6 @@ import (
 )
 
 func main() {
-
   output := PSL.TxOutput{}
   output.To = "your_target_cardano_address"
   output.Asset = "3d77d63dfa6033be98021417e08e3368cc80e67f8d7afa196aaa0b3953746172636820546f6b656e"
@@ -36,9 +35,8 @@ func main() {
   transaction := PSL.NewTransaction()
   transaction.Outputs = append(transaction.Outputs, output)
 
-  cborBytes := transaction.BodyToCBOR()
-
   // sign these bytes (not yet included in this module)
+  cborBytes := transaction.BodyToCBOR()
 
   transaction.Hash() // generate the transaction hash
 
