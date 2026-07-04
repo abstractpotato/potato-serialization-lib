@@ -8,7 +8,7 @@ import(
 
 type Context struct {
   ProtocolParams Params `cbor: "protocolParams"`
-  CurrentEpoch   Epoch  `cbor: "currentEpoch"`
+  CurrentEpoch   uint   `cbor: "currentEpoch"`
   Tip            uint   `cbor: "tip"`
 }
 
