@@ -16,3 +16,32 @@ import "github.com/potato-serialization-lib/psl"
 
 ## Core maintainers:
 [Abstract Potato](https://github.com/abstractpotato)
+
+
+## Build A Transaction Example
+```go
+package main
+
+import (
+  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
+)
+
+func main() {
+
+  output := PSL.TxOutput{}
+  output.To = "your_target_cardano_address"
+  output.Asset = "3d77d63dfa6033be98021417e08e3368cc80e67f8d7afa196aaa0b3953746172636820546f6b656e"
+  output.Amount = 1000
+
+  transaction := PSL.NewTransaction()
+  transaction.Outputs = append(transaction.Outputs, output)
+
+  cborBytes := transaction.BodyToCBOR()
+
+  // sign these bytes (not yet included in this module)
+
+  transaction.Hash() // generate the transaction hash
+
+  transaction.ToCBOR() // this would be submitted to the network
+}
+```
