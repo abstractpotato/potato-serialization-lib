@@ -18,6 +18,5 @@ func (RequestTxBuilder *builder) Build() (PSL.Transaction, error) {
 
   transaction := PSL.NewTransaction()
   transaction.Body.Data = append(transaction.Body.Data, requestData)
-  transaction.Hash()
   return transaction, nil
 }
