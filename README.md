@@ -8,7 +8,7 @@ go get github.com/abstractpotato/potato-serialization-lib
 
 In Go code
 ```go
-import PSL "github.com/potato-serialization-lib/psl"
+import PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 ```
 
 <!-- ## Documentation -->
@@ -29,15 +29,29 @@ func main() {
   output.Amount = 1000
 
   transaction := PSL.NewTransaction()
-  transaction.Outputs = append(transaction.Outputs, output)
+  transaction.Body.Outputs = append(transaction.Body.Outputs, output)
 
   // sign these bytes (not yet included in this module)
-  cborBytes := transaction.BodyToCBOR()
+  cborBytes, err := transaction.BodyToCBOR()
+  if err != nil {
+    panic(err)
+  }
+  _ = cborBytes
 
   transaction.Hash() // generate the transaction hash
 
   transaction.ToCBOR() // this would be submitted to the network
 }
+```
+
+## Runnable Examples
+
+Each example is in its own package under `examples/`:
+
+```sh
+go run ./examples/genesis
+go run ./examples/serialization
+go run ./examples/tx-builder
 ```
 
 ## Core maintainers:
