@@ -11,6 +11,7 @@ type Params struct {
   MaxBlockHeaderSize uint `cbor: "maxBlockHeaderSize"`
   MaxBlockBodySize   uint `cbor: "maxBlockBodySize"`
   MaxTxSize          uint `cbor: "maxTxSize"`
+  MinTxFee           uint `cbor: "mintTxFee"`
   TxFeePerByte       uint `cbor: "txFeePerByte"`
   SlotsPerEpoch      uint `cbor: "slotsPerEpoch"`
   SlotTimeInMs       uint `cbor: "slotTimeInMs"`

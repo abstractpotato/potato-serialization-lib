@@ -17,16 +17,15 @@ type TxHeader struct {
   Hash      string `cbor: "hash"`
   Sender    string `cbor: "sender"`
   Signature []byte `cbor: "signature"`
-  Fee       uint   `cbor: "fee"`
 }
 
 type TxBody struct {
   Outputs   []TxOutput `cbor: "outputs"`
   Data      []TxData   `cbor: "data"`
-  Epoch     uint       `cbor: "epoch"`
   TTL       uint       `cbor: "ttl"`
   Timestamp uint       `cbor: "timestamp"`
   Network   uint       `cbor: "network"`
+  Fee       uint   `cbor: "fee"`
 }
 
 type TxOutput struct {

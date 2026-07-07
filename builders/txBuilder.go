@@ -6,8 +6,8 @@ import (
 )
 
 type TxBuilder struct {
-  Context PSL.Context
-  Tx      PSL.Transaction
+  Params PSL.Params
+  Tx     PSL.Transaction
 }
 
 func NewTxBuilder() TxBuilder {
@@ -16,20 +16,25 @@ func NewTxBuilder() TxBuilder {
   }
 }
 
+func EstimateFee(params *PSL.Params, tx *PSL.Transaction) {
+  minTxFee := params.MintTxFee
+  txFeePerByte := params.TxFeePerByte
+  tx.Body.Fee = minTxFee
+  dryRunFee = minTxFee + (len(tx.BodyToCBOR()) * txFeePerByte)
+  tx.Body.Fee = dryRunFee
+  finalFee = minTxFee + (len(tx.BodyToCBOR()) * txFeePerByte)
+  tx.Body.Fee = finalFee
+}
+
 func (builder *TxBuilder) Build() (PSL.Transaction, error) {
   transaction := builder.Tx
-  transaction.Body.Network = builder.Context.Params.Network
-  transaction.Body.TTL = builder.Context.Slot + 60
-  transaction.Body.Epoch = builder.Context.Epoch
+  transaction.Body.Network = builder.Params.Network
+  transaction.Body.TTL = uint(time.Now().UnixMilli()) + 60
   transaction.Body.Timestamp = uint(time.Now().UnixMilli())
 
+  EstimateFee(builder.Params, builder.Tx)
+  
   transaction.Hash()
-  cborBytes, err := transaction.ToCBOR()
-  if err != nil { return transaction, err }
-
-  txFee := uint(len(cborBytes)) * builder.Context.Params.TxFeePerByte
-  transaction.Header.Fee = txFee
-
   return transaction, nil
 }
 
