@@ -15,8 +15,9 @@ type Transaction struct {
 
 type TxHeader struct {
   Hash      string `cbor: "hash"`
-  Sender    string `cbor: "sender"`
+  Addr      string `cbor: "sender"`
   Signature []byte `cbor: "signature"`
+  Key       []byte `cbor: "key"`
 }
 
 type TxBody struct {
