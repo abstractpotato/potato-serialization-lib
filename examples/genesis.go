@@ -2,8 +2,8 @@ package main
 
 import (
   "fmt"
-  "github.com/abstractpotato/potato-serialization-lib/psl"
-  "github.com/abstractpotato/potato-serialization-lib/builder"
+  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
+  Builder "github.com/abstractpotato/potato-serialization-lib/builder"
 )
 
 // this is an example of a hard coded genesis block
@@ -11,7 +11,7 @@ import (
 
 func main() {
   // genesis validator used to sign the transaction and block
-  validator := psl.NewValidator()
+  validator := PSL.NewValidator()
   validator.Addr = "test_addr"
   validator.CertificateTx = "genesis"
   validator.Relays = append(validator.Relays, "http://0.0.0.0:5001")
@@ -20,11 +20,11 @@ func main() {
   fmt.Printf("Genesis Validator:\n %s\n\n", validatorJSON)
 
   // initital protocol parameters
-  params := psl.NewParams()
+  params := PSL.NewParams()
   params.Network = 0
-  params.MaxBlockHeaderSize = 256
-  params.MaxBlockBodySize = 4096000000
-  params.MaxTxSize = 4096
+  params.MaxBlockHeaderSize = 128 // 128 bytes
+  params.MaxBlockBodySize = 40000000 // 40 MB or ~200k simple transactions
+  params.MaxTxSize = 4000 // 4 KB
   params.TxFeePerByte = 430
   params.SlotsPerEpoch = 432000
   params.SlotTimeInMs = 1000
@@ -33,7 +33,7 @@ func main() {
   fmt.Printf("Genesis Params:\n %+s\n\n", paramsJSON)
 
   //
-  epoch := psl.NewEpoch()
+  epoch := PSL.NewEpoch()
   epoch.Header.ID = 0
   epoch.Body.StartTime = 0
   epoch.Body.EndTime = epoch.Body.StartTime + params.SlotsPerEpoch
@@ -44,21 +44,21 @@ func main() {
   fmt.Printf("Genesis Epoch:\n %+v\n\n", epoch)
 
   // convert validator to cbor and format into TxData
-  validatorData := psl.TxData{}
+  validatorData := PSL.TxData{}
   validatorData.Tag = "genesis_validator"
   validatorCBOR, _ := validator.ToCBOR()
   validatorData.Data = validatorCBOR
   validatorData.Type = 0
 
   // convert parameters to cbor and format into TxData
-  paramsData := psl.TxData{}
+  paramsData := PSL.TxData{}
   paramsData.Tag = "genesis_params"
   paramsCBOR, _ := params.ToCBOR()
   paramsData.Data = paramsCBOR
   paramsData.Type = 0
 
   // add data into transaction body
-  transaction := psl.NewTransaction()
+  transaction := PSL.NewTransaction()
   transaction.Body.Data = append(transaction.Body.Data, validatorData)
   transaction.Body.Data = append(transaction.Body.Data, paramsData)
   transaction.Hash() // generate transaction hash
@@ -67,7 +67,7 @@ func main() {
   fmt.Printf("Genesis Transaction:\n %s\n\n", txJSON)
 
   // add transaction into block body
-  block := psl.NewBlock()
+  block := PSL.NewBlock()
   block.Header.ID = 0
   block.Header.Validator = validator.Addr
   // add validator signature as witness
