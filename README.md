@@ -19,24 +19,32 @@ import PSL "github.com/potato-serialization-lib/psl"
 package main
 
 import (
-  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
+  Builders "github.com/abstractpotato/potato-serialization-lib/builders"
 )
 
 func main() {
-  output := PSL.TxOutput{}
-  output.To = "your_target_cardano_address"
-  output.Asset = "3d77d63dfa6033be98021417e08e3368cc80e67f8d7afa196aaa0b3953746172636820546f6b656e"
+  output := PSL.SimpleOutput()
+  output.To = "targer_cardano_address"
+  output.Asset = "policy_id+asset_name"
   output.Amount = 1000
 
-  transaction := PSL.NewTransaction()
-  transaction.Outputs = append(transaction.Outputs, output)
+  txBuilder := Builders.NewTxBuilder()
+  txBuilder.Params = params // this assumes you already have network params
+  txBuilder.AddSimpleOutput(output)
+  txBuilder.EstimateFee()
+  txBuilder.Build()
 
-  // sign these bytes (not yet included in this module)
-  cborBytes := transaction.BodyToCBOR()
+  transaction := txBuilder.Tx
 
-  transaction.Hash() // generate the transaction hash
+  bodyCBOR, _ := transaction.BodyToCBOR()
 
-  transaction.ToCBOR() // this would be submitted to the network
+  // sign bodyCBOR (not yet in this module)
+
+  transaction.AddSignature(signature)
+
+  txCBOR, _ := transaction.ToCBOR()
+
+  // submit txCBOR to the network
 }
 ```
 
