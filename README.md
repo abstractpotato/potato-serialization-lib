@@ -8,7 +8,8 @@ go get github.com/abstractpotato/potato-serialization-lib
 
 In Go code
 ```go
-import PSL "github.com/potato-serialization-lib/psl"
+import "github.com/potato-serialization-lib/builders"
+import "github.com/potato-serialization-lib/psl"
 ```
 
 <!-- ## Documentation -->
