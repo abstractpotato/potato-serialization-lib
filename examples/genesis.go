@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "github.com/abstractpotato/potato-serialization-lib/psl"
+  "github.com/abstractpotato/potato-serialization-lib/builder"
 )
 
 // this is an example of a hard coded genesis block
@@ -22,7 +23,7 @@ func main() {
   params := psl.NewParams()
   params.Network = 0
   params.MaxBlockHeaderSize = 256
-  params.MaxBlockBodySize = 2048000000
+  params.MaxBlockBodySize = 4096000000
   params.MaxTxSize = 4096
   params.TxFeePerByte = 430
   params.SlotsPerEpoch = 432000

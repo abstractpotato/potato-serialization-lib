@@ -16,32 +16,60 @@ func NewTxBuilder() TxBuilder {
   }
 }
 
-func EstimateFee(params *PSL.Params, tx *PSL.Transaction) {
-  minTxFee := params.MintTxFee
-  txFeePerByte := params.TxFeePerByte
-  tx.Body.Fee = minTxFee
-  dryRunFee = minTxFee + (len(tx.BodyToCBOR()) * txFeePerByte)
-  tx.Body.Fee = dryRunFee
-  finalFee = minTxFee + (len(tx.BodyToCBOR()) * txFeePerByte)
-  tx.Body.Fee = finalFee
+func (builder *TxBuilder) EstimateFee() error {
+  minTxFee := builder.Params.MinTxFee
+  txFeePerByte := builder.Params.TxFeePerByte
+  builder.Tx.Body.Fee = minTxFee
+
+  cborBytes, err := builder.Tx.BodyToCBOR()
+  if err != nil { return err }
+
+  dryRunFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)
+  builder.Tx.Body.Fee = dryRunFee
+
+  cborBytes, err = builder.Tx.BodyToCBOR()
+  if err != nil { return err }
+
+  finalFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)
+  builder.Tx.Body.Fee = finalFee
+  return nil
 }
 
-func (builder *TxBuilder) Build() (PSL.Transaction, error) {
-  transaction := builder.Tx
-  transaction.Body.Network = builder.Params.Network
-  transaction.Body.TTL = uint(time.Now().UnixMilli()) + 60
-  transaction.Body.Timestamp = uint(time.Now().UnixMilli())
+func (builder *TxBuilder) Build() error {
 
-  EstimateFee(builder.Params, builder.Tx)
-  
-  transaction.Hash()
-  return transaction, nil
+  builder.Tx.Body.Network = builder.Params.Network
+  builder.Tx.Body.TTL = 3000 // 3 seconds
+  builder.Tx.Body.Timestamp = uint(time.Now().UnixMilli())
+  builder.EstimateFee()
+  builder.Tx.Hash()
+  return nil
 }
 
-func (builder *TxBuilder) AddOutput(output PSL.TxOutput) {
-  builder.Tx.Body.Outputs = append(builder.Tx.Body.Outputs, output)
+func (builder *TxBuilder) AddSimpleOutput(output PSL.SimpleOutput) {
+  builder.Tx.AddSimpleOutput(output)
+}
+
+func (builder *TxBuilder) AddMultiAssetOutput(output PSL.MultiAssetOutput) {
+  builder.Tx.AddMultiAssetOutput(output)
+}
+
+func (builder *TxBuilder) AddMultiAddrOutput(output PSL.MultiAddrOutput) {
+  builder.Tx.AddMultiAddrOutput(output)
 }
 
 func (builder *TxBuilder) AddData(data PSL.TxData) {
-  builder.Tx.Body.Data = append(builder.Tx.Body.Data, data)
+  builder.Tx.AddData(data)
+}
+
+func (builder *TxBuilder) AddRequest(request PSL.Request) error {
+  cborBytes, err := request.ToCBOR()
+  if err != nil { return err }
+
+  requestData := PSL.TxData{}
+  requestData.Tag = "validator_request"
+  requestData.Data = cborBytes
+  requestData.Type = 0
+
+  builder.AddData(requestData)
+  return nil
 }

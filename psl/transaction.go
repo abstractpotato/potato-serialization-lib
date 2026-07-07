@@ -20,18 +20,12 @@ type TxHeader struct {
 }
 
 type TxBody struct {
-  Outputs   []TxOutput `cbor: "outputs"`
-  Data      []TxData   `cbor: "data"`
-  TTL       uint       `cbor: "ttl"`
-  Timestamp uint       `cbor: "timestamp"`
-  Network   uint       `cbor: "network"`
-  Fee       uint   `cbor: "fee"`
-}
-
-type TxOutput struct {
-  To     string `cbor: "to"`
-  Asset  string `cbor: "asset"`
-  Amount uint   `cbor: "amount"`
+  Outputs   TxOutputs `cbor: "outputs"`
+  Data      []TxData    `cbor: "data"`
+  TTL       uint        `cbor: "ttl"`
+  Timestamp uint        `cbor: "timestamp"`
+  Network   uint        `cbor: "network"`
+  Fee       uint        `cbor: "fee"`
 }
 
 type TxData struct {
@@ -44,7 +38,7 @@ func NewTransaction() Transaction {
   return Transaction{
     Header: TxHeader{},
     Body: TxBody{
-      Outputs: make([]TxOutput, 0),
+      Outputs: NewTxOutputs(),
       Data: make([]TxData, 0),
     },
   }
@@ -94,4 +88,20 @@ func (transaction *Transaction) Hash() error {
   if err != nil { return err }
   transaction.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
   return nil
+}
+
+func (transaction *Transaction) AddSimpleOutput(output SimpleOutput) {
+  transaction.Body.Outputs.AddSimpleOutput(output)
+}
+
+func (transaction *Transaction) AddMultiAssetOutput(output MultiAssetOutput) {
+  transaction.Body.Outputs.AddMultiAssetOutput(output)
+}
+
+func (transaction *Transaction) AddMultiAddrOutput(output MultiAddrOutput) {
+  transaction.Body.Outputs.AddMultiAddrOutput(output)
+}
+
+func (transaction *Transaction) AddData(data TxData) {
+  transaction.Body.Data = append(transaction.Body.Data, data)
 }
