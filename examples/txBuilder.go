@@ -3,6 +3,7 @@ package main
 import "fmt"
 import PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 import Builders "github.com/abstractpotato/potato-serialization-lib/builders"
+import wrapper "github.com/abstractpotato/cardano-signature-wrapper"
 
 // these transactions do not have signatures yet
 
@@ -17,14 +18,14 @@ func main() {
   // validator registration
   createRequestTx(params)
 
-  // simple 1 receiver 1 asset transaction
-  createBasicTx(params)
-
-  // 1 receiver multiple asset transaction
-  createMultiAssetTx(params)
-
-  // 1 asset multiple receivers transaction
-  createMultiAddrTx(params)
+  // // simple 1 receiver 1 asset transaction
+  // createBasicTx(params)
+  //
+  // // 1 receiver multiple asset transaction
+  // createMultiAssetTx(params)
+  //
+  // // 1 asset multiple receivers transaction
+  // createMultiAddrTx(params)
 }
 
 func createBasicTx(params PSL.Params) {
@@ -36,8 +37,13 @@ func createBasicTx(params PSL.Params) {
   output.Asset = "policy_id+asset_name"
   output.Amount = 10000
 
+
   txBuilder.AddSimpleOutput(output)
   txBuilder.Build()
+
+  txBodyCBOR, _ := txBuilder.Tx.BodyToCBOR()
+  signature := wrapper.Sign(txBodyCBOR)
+  txBuilder.Tx.Signature = signature
 
   fmt.Printf("%+v\n", txBuilder.Tx)
 }
