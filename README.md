@@ -12,8 +12,10 @@ import "github.com/potato-serialization-lib/psl"
 import "github.com/potato-serialization-lib/builders"
 ```
 
-<!-- ## Documentation -->
-<!-- [Click Here](https://starch.one/docs/starch_pay) -->
+Run Examples
+```
+go run examples/<example_name.go>
+```
 
 ## Build A Transaction Example
 ```go
