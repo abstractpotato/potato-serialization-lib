@@ -19,6 +19,7 @@ import PSL "github.com/potato-serialization-lib/psl"
 package main
 
 import (
+  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
   Builders "github.com/abstractpotato/potato-serialization-lib/builders"
 )
 
