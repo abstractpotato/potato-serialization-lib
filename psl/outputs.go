@@ -40,6 +40,18 @@ func NewTxOutputs() TxOutputs {
   }
 }
 
+func NewMultiAssetOutput() MultiAssetOutput {
+  return MultiAssetOutput{
+    Assets: make([]AssetOutput, 0),
+  }
+}
+
+func NewMultiAddrOutput() MultiAddrOutput {
+  return MultiAddrOutput{
+    Addrs: make([]AddrOutput, 0),
+  }
+}
+
 func (outputs *TxOutputs) AddSimpleOutput(output SimpleOutput) {
   outputs.SimpleOutputs = append(outputs.SimpleOutputs, output)
 }
@@ -50,4 +62,12 @@ func (outputs *TxOutputs) AddMultiAssetOutput(output MultiAssetOutput) {
 
 func (outputs *TxOutputs) AddMultiAddrOutput(output MultiAddrOutput) {
   outputs.MultiAddrOutputs = append(outputs.MultiAddrOutputs, output)
+}
+
+func (outputs *MultiAssetOutput) AddAssetOutput(asset AssetOutput) {
+  outputs.Assets = append(outputs.Assets, asset)
+}
+
+func (outputs *MultiAddrOutput) AddAddrOutput(addr AddrOutput) {
+  outputs.Addrs = append(outputs.Addrs, addr)
 }

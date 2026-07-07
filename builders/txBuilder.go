@@ -36,7 +36,6 @@ func (builder *TxBuilder) EstimateFee() error {
 }
 
 func (builder *TxBuilder) Build() error {
-
   builder.Tx.Body.Network = builder.Params.Network
   builder.Tx.Body.TTL = 3000 // 3 seconds
   builder.Tx.Body.Timestamp = uint(time.Now().UnixMilli())
