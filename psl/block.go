@@ -16,12 +16,12 @@ type Block struct {
 type BlockHeader struct {
   ID        uint      `cbor: "id"`
   Hash      string    `cbor: "hash"`
-  Validator string    `cbor: "validator"`
   Witnesses []Witness `cbor: "witness"`
+  Bytes     []byte    `cbor: "bytes"`
 }
 
 type Witness struct {
-  Validator string `cbor: "validator"`
+  Addr      string `cbor: "validator"`
   Signature []byte `cbor: "signature"`
 }
 
@@ -79,6 +79,12 @@ func (block *Block) ToJSON() ([]byte, error) {
   return jsonBytes, nil
 }
 
+func (block *Block) HeaderToCBOR() ([]byte, error) {
+  cborBytes, err := cbor.Marshal(block.Header)
+  if err != nil { return nil, err }
+  return cborBytes, nil
+}
+
 func (block *Block) BodyToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(block.Body)
   if err != nil { return nil, err }
@@ -90,4 +96,8 @@ func (block *Block) Hash() error {
   if err != nil { return err }
   block.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
   return nil
+}
+
+func (block *Block) AddWitness(witness Witness) {
+  block.Header.Witnesses = append(block.Header.Witnesses, witness)
 }

@@ -77,10 +77,30 @@ func (transaction *Transaction) ToJSON() ([]byte, error) {
   return jsonBytes, nil
 }
 
+func (transaction *Transaction) HeaderToCBOR() ([]byte, error) {
+  cborBytes, err := cbor.Marshal(transaction.Header)
+  if err != nil { return nil, err }
+  return cborBytes, nil
+}
+
 func (transaction *Transaction) BodyToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(transaction.Body)
   if err != nil { return nil, err }
   return cborBytes, nil
+}
+
+func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {
+  var header TxHeader
+  err := cbor.Unmarshal(cborBytes, &header)
+  if err != nil { return TxHeader{}, err }
+  return header, nil
+}
+
+func TxBodyFromCBOR(cborBytes []byte) (TxBody, error) {
+  var body TxBody
+  err := cbor.Unmarshal(cborBytes, &body)
+  if err != nil { return TxBody{}, err }
+  return body, nil
 }
 
 func (transaction *Transaction) Hash() error {
