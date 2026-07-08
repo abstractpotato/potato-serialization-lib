@@ -39,12 +39,12 @@ func createBasicTx(params PSL.Params) {
   txBuilder.AddSimpleOutput(output)
   txBuilder.Build()
 
-  txBodyHex, err := txBuilder.Tx.BodyToHex()
-  fmt.Println(err)
-  signature, err := wrapper.Sign(txBodyHex)
-  fmt.Println(err)
+  // txBodyHex, err := txBuilder.Tx.BodyToHex()
+  // fmt.Println(err)
+  // signature, err := wrapper.Sign(txBodyHex)
+  // fmt.Println(err)
 
-  txBuilder.Tx.Header.Signature = signature
+  // txBuilder.Tx.Header.Signature = signature
 
   fmt.Printf("%+v\n", txBuilder.Tx)
 }
