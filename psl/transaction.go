@@ -90,6 +90,12 @@ func (transaction *Transaction) BodyToCBOR() ([]byte, error) {
   return cborBytes, nil
 }
 
+func (transaction *Transaction) BodyToHex() (string, error) {
+  cborBytes, err := transaction.BodyToCBOR()
+  if err != nil { return "", err }
+  return hex.EncodeToString(cborBytes), nil
+}
+
 func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {
   var header TxHeader
   err := cbor.Unmarshal(cborBytes, &header)
