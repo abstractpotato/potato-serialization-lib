@@ -3,7 +3,7 @@ package main
 import "fmt"
 import PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 import Builders "github.com/abstractpotato/potato-serialization-lib/builders"
-import wrapper "github.com/abstractpotato/cardano-signature-wrapper"
+import wrapper "github.com/abstractpotato/potato-serialization-lib/signer"
 
 // these transactions do not have signatures yet
 
@@ -40,9 +40,9 @@ func createBasicTx(params PSL.Params) {
   txBuilder.AddSimpleOutput(output)
   txBuilder.Build()
 
-  txBodyCBOR, err := txBuilder.Tx.BodyToCBOR()
+  txBodyHex, err := txBuilder.Tx.BodyToHex()
   fmt.Println(err)
-  signature, err := wrapper.Sign(txBodyCBOR)
+  signature, err := wrapper.Sign(txBodyHex)
   fmt.Println(err)
 
   txBuilder.Tx.Header.Signature = signature

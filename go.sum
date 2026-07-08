@@ -1,5 +1,9 @@
-github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260707235650-b9f5ff190966 h1:kqnYMRg8aiq4oqugKUvI39SX3PZTbH/YwqOjbnNGXGs=
-github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260707235650-b9f5ff190966/go.mod h1:qpPCztVve/D48fz/yexj+fXk7iah7lr9LE5xYPSPjCQ=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708004144-b0a222707e86 h1:c9FdC0u9ZMiphkFmiA4vE0M+m3AbzWSad23AY1DPavk=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708004144-b0a222707e86/go.mod h1:qpPCztVve/D48fz/yexj+fXk7iah7lr9LE5xYPSPjCQ=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708005253-f7fdc42fb310 h1:+PkfAvENWYoQheASQwuZ/cyZxBWpRGmowapCTxQF8cM=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708005253-f7fdc42fb310/go.mod h1:qpPCztVve/D48fz/yexj+fXk7iah7lr9LE5xYPSPjCQ=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708005402-d750760f0e87 h1:GCbYnvA1Jf9jVBpGco0X8p4AYfU5+Ri7Nvt8AS9r2Q0=
+github.com/abstractpotato/cardano-signature-wrapper v0.0.0-20260708005402-d750760f0e87/go.mod h1:qpPCztVve/D48fz/yexj+fXk7iah7lr9LE5xYPSPjCQ=
 github.com/fxamacker/cbor/v2 v2.9.2 h1:X4Ksno9+x3cz0TZv69ec1hxP/+tymuR8PXQJyDwfh78=
 github.com/fxamacker/cbor/v2 v2.9.2/go.mod h1:vM4b+DJCtHn+zz7h3FFp/hDAI9WNWCsZj23V5ytsSxQ=
 github.com/x448/float16 v0.8.4 h1:qLwI1I70+NjRFUR3zs1JPUCgaCXSh3SW62uAKT1mSBM=
