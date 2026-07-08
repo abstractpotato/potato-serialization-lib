@@ -3,7 +3,6 @@ package main
 import "fmt"
 import PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 import Builders "github.com/abstractpotato/potato-serialization-lib/builders"
-import wrapper "github.com/abstractpotato/potato-serialization-lib/wrapper"
 
 // these transactions do not have signatures yet
 
