@@ -17,7 +17,7 @@ type TxHeader struct {
   Hash      string `cbor: "hash"`
   Addr      string `cbor: "sender"`
   Signature []byte `cbor: "signature"`
-  Key       []byte `cbor: "key"`
+  Key       []byte `cbor: "key",omitempty`
 }
 
 type TxBody struct {
