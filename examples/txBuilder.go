@@ -16,10 +16,10 @@ func main() {
   params.TxFeePerByte = 430
 
   // validator registration
-  createRequestTx(params)
+  // createRequestTx(params)
 
   // // simple 1 receiver 1 asset transaction
-  // createBasicTx(params)
+  createBasicTx(params)
   //
   // // 1 receiver multiple asset transaction
   // createMultiAssetTx(params)
@@ -37,13 +37,15 @@ func createBasicTx(params PSL.Params) {
   output.Asset = "policy_id+asset_name"
   output.Amount = 10000
 
-
   txBuilder.AddSimpleOutput(output)
   txBuilder.Build()
 
-  txBodyCBOR, _ := txBuilder.Tx.BodyToCBOR()
-  signature := wrapper.Sign(txBodyCBOR)
-  txBuilder.Tx.Signature = signature
+  txBodyCBOR, err := txBuilder.Tx.BodyToCBOR()
+  fmt.Println(err)
+  signature, err := wrapper.Sign(txBodyCBOR)
+  fmt.Println(err)
+
+  txBuilder.Tx.Header.Signature = signature
 
   fmt.Printf("%+v\n", txBuilder.Tx)
 }
