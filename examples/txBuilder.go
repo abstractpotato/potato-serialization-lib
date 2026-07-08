@@ -46,8 +46,15 @@ func createBasicTx(params PSL.Params) {
   if err != nil { fmt.Println(err) }
 
   txBuilder.Tx.Header.Signature = signature
-  
+
+  verified, _ := wrapper.Verify(signature, []byte(""))
+
+  txBody, _ := PSL.TxBodyFromHex(verified.Message)
+
+  fmt.Printf("%+v\n", verified)
   fmt.Printf("%+v\n", txBuilder.Tx)
+  fmt.Printf("%+v\n", txBody)
+
 }
 
 func createMultiAssetTx(params PSL.Params) {
