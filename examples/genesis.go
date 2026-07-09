@@ -3,6 +3,8 @@ package main
 import "fmt"
 import PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 import Builders "github.com/abstractpotato/potato-serialization-lib/builders"
+import wrapper "github.com/abstractpotato/cardano-signature-wrapper"
+
 
 // this is an example of a hard coded genesis block
 // does not yet include signatures

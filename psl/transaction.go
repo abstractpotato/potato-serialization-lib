@@ -13,28 +13,6 @@ type Transaction struct {
   Body   TxBody   `cbor: "body"`
 }
 
-type TxHeader struct {
-  Hash      string `cbor: "hash"`
-  Addr      string `cbor: "sender"`
-  Signature []byte `cbor: "signature"`
-  Key       []byte `cbor: "key",omitempty`
-}
-
-type TxBody struct {
-  Outputs   TxOutputs `cbor: "outputs"`
-  Data      []TxData  `cbor: "data"`
-  TTL       uint      `cbor: "ttl"`
-  Timestamp uint      `cbor: "timestamp"`
-  Network   uint      `cbor: "network"`
-  Fee       uint      `cbor: "fee"`
-}
-
-type TxData struct {
-  Tag  string `cbor: "tag"`
-  Data []byte `cbor: "data"`
-  Type uint   `cbor: "type"`
-}
-
 func NewTransaction() Transaction {
   return Transaction{
     Header: TxHeader{},
@@ -84,6 +62,12 @@ func (transaction *Transaction) HeaderToCBOR() ([]byte, error) {
   return cborBytes, nil
 }
 
+func (transaction *Transaction) HeaderToHex() (string, error) {
+  cborBytes, err := transaction.HeaderToCBOR()
+  if err != nil { return "", err }
+  return hex.EncodeToString(cborBytes), nil
+}
+
 func (transaction *Transaction) BodyToCBOR() ([]byte, error) {
   cborBytes, err := cbor.Marshal(transaction.Body)
   if err != nil { return nil, err }
@@ -94,28 +78,6 @@ func (transaction *Transaction) BodyToHex() (string, error) {
   cborBytes, err := transaction.BodyToCBOR()
   if err != nil { return "", err }
   return hex.EncodeToString(cborBytes), nil
-}
-
-func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {
-  var header TxHeader
-  err := cbor.Unmarshal(cborBytes, &header)
-  if err != nil { return TxHeader{}, err }
-  return header, nil
-}
-
-func TxBodyFromCBOR(cborBytes []byte) (TxBody, error) {
-  var body TxBody
-  err := cbor.Unmarshal(cborBytes, &body)
-  if err != nil { return TxBody{}, err }
-  return body, nil
-}
-
-func TxBodyFromHex(hexString string) (TxBody, error) {
-  cborBytes, err := hex.DecodeString(hexString)
-  if err != nil { return TxBody{}, err }
-  body, err := TxBodyFromCBOR(cborBytes)
-  if err != nil { return TxBody{}, err }
-  return body, nil
 }
 
 func (transaction *Transaction) Hash() error {

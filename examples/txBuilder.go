@@ -15,12 +15,12 @@ func main() {
   params.MinTxFee = 4300
   params.TxFeePerByte = 430
 
-  // validator registration
+  // // validator registration
   // createRequestTx(params)
 
-  // // simple 1 receiver 1 asset transaction
+  // simple 1 receiver 1 asset transaction
   createBasicTx(params)
-  //
+
   // // 1 receiver multiple asset transaction
   // createMultiAssetTx(params)
   //
@@ -50,11 +50,10 @@ func createBasicTx(params PSL.Params) {
   verified, _ := wrapper.Verify(signature, []byte(""))
 
   txBody, _ := PSL.TxBodyFromHex(verified.Message)
-
-  fmt.Printf("%+v\n", verified)
-  fmt.Printf("%+v\n", txBuilder.Tx)
-  fmt.Printf("%+v\n", txBody)
-
+  
+  fmt.Printf("%+v\n\n", verified)
+  fmt.Printf("%+v\n\n", txBuilder.Tx)
+  fmt.Printf("%+v\n\n", txBody)
 }
 
 func createMultiAssetTx(params PSL.Params) {
