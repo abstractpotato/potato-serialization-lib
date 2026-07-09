@@ -28,6 +28,7 @@ func main() {
   params.SlotsPerEpoch = 432000
   params.SlotTimeInMs = 1000
   params.ProtocolVersion = 0
+
   paramsJSON, _ := params.ToJSON()
   fmt.Printf("Genesis Params:\n %+s\n\n", paramsJSON)
 
