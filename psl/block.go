@@ -9,8 +9,8 @@ import(
 )
 
 type Block struct {
-  Header BlockHeader `cbor:"0,keyasint"`
-  Body   BlockBody   `cbor:"1,keyasint"`
+  Header BlockHeader `cbor:"0,keyasint" json:"header"`
+  Body   BlockBody   `cbor:"1,keyasint" json:"body"`
 }
 
 func NewBlock() Block {

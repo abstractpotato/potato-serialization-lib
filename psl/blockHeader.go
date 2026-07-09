@@ -9,9 +9,9 @@ import(
 type Witness []byte
 
 type BlockHeader struct {
-  ID        uint      `cbor:"0,keyasint"`
-  Hash      string    `cbor:"1,keyasint"`
-  Witnesses []Witness `cbor:"2,keyasint,toarray"`
+  ID        uint      `cbor:"0,keyasint" json:"id"`
+  Hash      string    `cbor:"1,keyasint" json:"hash"`
+  Witnesses []Witness `cbor:"2,keyasint,toarray" json:"witnesses"`
 }
 
 func BlockHeaderFromCBOR(cborBytes []byte) (BlockHeader, error) {

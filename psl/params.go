@@ -7,15 +7,15 @@ import(
 )
 
 type Params struct {
-  Network            uint `cbor:"0,keyasint"`
-  MaxBlockHeaderSize uint `cbor:"1,keyasint"`
-  MaxBlockBodySize   uint `cbor:"2,keyasint"`
-  MaxTxSize          uint `cbor:"3,keyasint"`
-  MinTxFee           uint `cbor:"4,keyasint"`
-  TxFeePerByte       uint `cbor:"5,keyasint"`
-  SlotsPerEpoch      uint `cbor:"6,keyasint"`
-  SlotTimeInMs       uint `cbor:"7,keyasint"`
-  ProtocolVersion    uint `cbor:"8,keyasint"`
+  Network            uint `cbor:"0,keyasint" json:"network"`
+  MaxBlockHeaderSize uint `cbor:"1,keyasint" json:"maxBlockHeaderSize"`
+  MaxBlockBodySize   uint `cbor:"2,keyasint" json:"maxBlockBodySize"`
+  MaxTxSize          uint `cbor:"3,keyasint" json:"maxTxSize"`
+  MinTxFee           uint `cbor:"4,keyasint" json:"minTxFee"`
+  TxFeePerByte       uint `cbor:"5,keyasint" json:"txFeePerByte"`
+  SlotsPerEpoch      uint `cbor:"6,keyasint" json:"slotsPerEpoch"`
+  SlotTimeInMs       uint `cbor:"7,keyasint" json:"slotTimeInMs"`
+  ProtocolVersion    uint `cbor:"8,keyasint" json:"protocolVersion"`
 }
 
 func NewParams() Params {

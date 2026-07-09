@@ -7,10 +7,10 @@ import(
 )
 
 type TxHeader struct {
-  Hash      string `cbor:"0,keyasint"`
-  Addr      string `cbor:"1,keyasint"`
-  Signature []byte `cbor:"2,keyasint"`
-  Key       []byte `cbor:"3,keyasint,omitempty"`
+  Hash      string `cbor:"0,keyasint" json:"hash"`
+  Addr      string `cbor:"1,keyasint" json:"addr"`
+  Signature []byte `cbor:"2,keyasint" json:"signature"`
+  Key       []byte `cbor:"3,keyasint,omitempty" json:"key"`
 }
 
 func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {

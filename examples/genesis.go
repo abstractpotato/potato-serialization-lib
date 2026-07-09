@@ -24,7 +24,7 @@ func main() {
   params.MaxBlockHeaderSize = 1100 // 128 bytes
   params.MaxBlockBodySize = 40000000 // 40 MB or ~200k simple transactions
   params.MaxTxSize = 4000 // 4 KB
-  params.MinTxFee = 236500
+  params.MinTxFee = 222310
   params.TxFeePerByte = 430
   params.SlotsPerEpoch = 432000
   params.SlotTimeInMs = 1000

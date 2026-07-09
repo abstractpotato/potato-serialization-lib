@@ -7,13 +7,13 @@ import(
 )
 
 type BlockBody struct {
-  PreviousHash string        `cbor:"0,keyasint"`
-  VRF          string        `cbor:"1,keyasint"`
-  Epoch        uint          `cbor:"2,keyasint"`
-  Slot         uint          `cbor:"3,keyasint"`
-  Transactions []Transaction `cbor:"4,keyasint,toarray,omitempty"`
-  Fees         uint          `cbor:"5,keyasint,omitempty"`
-  Timestamp    uint          `cbor:"6,keyasint"`
+  PreviousHash string        `cbor:"0,keyasint" json:"previousHash"`
+  VRF          string        `cbor:"1,keyasint" json:"vrf"`
+  Epoch        uint          `cbor:"2,keyasint" json:"epoch"`
+  Slot         uint          `cbor:"3,keyasint" json:"slot"`
+  Transactions []Transaction `cbor:"4,keyasint,toarray,omitempty" json:"transactions,omitempty"`
+  Fees         uint          `cbor:"5,keyasint,omitempty" json:"fees"`
+  Timestamp    uint          `cbor:"6,keyasint" json:"timestamp"`
 }
 
 func BlockBodyFromCBOR(cborBytes []byte) (BlockBody, error) {

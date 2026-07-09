@@ -1,35 +1,35 @@
 package psl
 
 type TxOutputs struct {
-  SimpleOutputs     []SimpleOutput     `cbor:"0,keyasint,toarray,omitempty"`
-  MultiAssetOutputs []MultiAssetOutput `cbor:"1,keyasint,toarray,omitempty"`
-  MultiAddrOutputs  []MultiAddrOutput  `cbor:"2,keyasint,toarray,omitempty"`
+  SimpleOutputs     []SimpleOutput     `cbor:"0,keyasint,toarray,omitempty" json:"simpleOutputs,omitempty"`
+  MultiAssetOutputs []MultiAssetOutput `cbor:"1,keyasint,toarray,omitempty" json:"multiAssetOutputs,omitempty"`
+  MultiAddrOutputs  []MultiAddrOutput  `cbor:"2,keyasint,toarray,omitempty" json:"multiAddrOutputs,omitempty"`
 }
 
 type SimpleOutput struct {
-  To     string `cbor:"0,keyasint"`
-  Asset  string `cbor:"1,keyasint"`
-  Amount uint   `cbor:"2,keyasint"`
+  To     string `cbor:"0,keyasint" json:"to"`
+  Asset  string `cbor:"1,keyasint" json:"asset"`
+  Amount uint   `cbor:"2,keyasint" json:"amount"`
 }
 
 type MultiAssetOutput struct {
-  To     string        `cbor:"0,keyasint"`
-  Assets []AssetOutput `cbor:"1,keyasint"`
+  To     string        `cbor:"0,keyasint" json:"to"`
+  Assets []AssetOutput `cbor:"1,keyasint,toarray" json:"asset"`
 }
 
 type AssetOutput struct {
-  ID     string `cbor:"0,keyasint"`
-  Amount uint   `cbor:"1,keyasint"`
+  Asset  string `cbor:"0,keyasint" json:"asset"`
+  Amount uint   `cbor:"1,keyasint" json:"amount"`
 }
 
 type MultiAddrOutput struct {
-  Asset  string       `cbor:"0,keyasint"`
-  Addrs  []AddrOutput `cbor:"1,keyasint"`
+  Asset  string       `cbor:"0,keyasint" json:"asset"`
+  Addrs  []AddrOutput `cbor:"1,keyasint,toarray" json:"addresses"`
 }
 
 type AddrOutput struct {
-  Addr   string `cbor:"0,keyasint"`
-  Amount uint   `cbor:"1,keyasint"`
+  Addr   string `cbor:"0,keyasint" json:"addr"`
+  Amount uint   `cbor:"1,keyasint" json:"amount"`
 }
 
 func NewTxOutputs() TxOutputs {

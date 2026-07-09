@@ -7,12 +7,12 @@ import(
 )
 
 type TxBody struct {
-  Outputs   TxOutputs `cbor:"0,keyasint"`
-  Data      []TxData  `cbor:"1,keyasint,toarray,omitempty"`
-  TTL       uint      `cbor:"2,keyasint"`
-  Timestamp uint      `cbor:"3,keyasint"`
-  Network   uint      `cbor:"4,keyasint"`
-  Fee       uint      `cbor:"5,keyasint"`
+  Outputs   TxOutputs `cbor:"0,keyasint" json:"outputs"`
+  Data      []TxData  `cbor:"1,keyasint,toarray,omitempty", json:"data"`
+  TTL       uint      `cbor:"2,keyasint" json:"ttl"`
+  Timestamp uint      `cbor:"3,keyasint" json:"timestamp"`
+  Network   uint      `cbor:"4,keyasint" json:"network"`
+  Fee       uint      `cbor:"5,keyasint" json:"fee"`
 }
 
 type TxData struct {

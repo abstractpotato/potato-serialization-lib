@@ -9,8 +9,8 @@ import(
 )
 
 type Transaction struct {
-  Header TxHeader `cbor:"0,keyasint"`
-  Body   TxBody   `cbor:"1,keyasint"`
+  Header TxHeader `cbor:"0,keyasint" json:"header"`
+  Body   TxBody   `cbor:"1,keyasint" json:"body"`
 }
 
 func NewTransaction() Transaction {

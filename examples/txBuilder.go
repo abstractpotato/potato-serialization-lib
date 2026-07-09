@@ -12,7 +12,7 @@ func main() {
   params := PSL.NewParams()
   params.Network = 0
   params.MaxTxSize = 4000
-  params.MinTxFee = 236500
+  params.MinTxFee = 222310
   params.TxFeePerByte = 430
 
   // // simple 1 receiver 1 asset transaction
@@ -59,11 +59,11 @@ func createMultiAssetTx(params PSL.Params) {
   txBuilder.Params = params
 
   asset0 := PSL.AssetOutput{}
-  asset0.ID = "policy_id+asset_name"
+  asset0.Asset = "policy_id+asset_name"
   asset0.Amount = 1000
 
   asset1 := PSL.AssetOutput{}
-  asset1.ID = "policy_id+asset_name"
+  asset1.Asset = "policy_id+asset_name"
   asset1.Amount = 1000
 
   outputs := PSL.NewMultiAssetOutput()
