@@ -12,20 +12,20 @@ func main() {
   params := PSL.NewParams()
   params.Network = 0
   params.MaxTxSize = 4000
-  params.MinTxFee = 4300
+  params.MinTxFee = 236500
   params.TxFeePerByte = 430
 
-  // // validator registration
-  // createRequestTx(params)
-
-  // simple 1 receiver 1 asset transaction
+  // // simple 1 receiver 1 asset transaction
   createBasicTx(params)
 
-  // // 1 receiver multiple asset transaction
-  // createMultiAssetTx(params)
-  //
-  // // 1 asset multiple receivers transaction
-  // createMultiAddrTx(params)
+  // 1 receiver multiple asset transaction
+  createMultiAssetTx(params)
+
+  // 1 asset multiple receivers transaction
+  createMultiAddrTx(params)
+
+  // validator registration
+  createRequestTx(params)
 }
 
 func createBasicTx(params PSL.Params) {
@@ -40,20 +40,18 @@ func createBasicTx(params PSL.Params) {
   txBuilder.AddSimpleOutput(output)
   txBuilder.Build()
 
-  txBodyHex, err := txBuilder.Tx.BodyToHex()
+  signature, err := wrapper.Sign(txBuilder.Tx.Header.Hash)
   if err != nil { fmt.Println(err) }
-  signature, err := wrapper.Sign(txBodyHex)
-  if err != nil { fmt.Println(err) }
-
   txBuilder.Tx.Header.Signature = signature
 
-  verified, _ := wrapper.Verify(signature, []byte(""))
-
-  txBody, _ := PSL.TxBodyFromHex(verified.Message)
-  
-  fmt.Printf("%+v\n\n", verified)
-  fmt.Printf("%+v\n\n", txBuilder.Tx)
-  fmt.Printf("%+v\n\n", txBody)
+  txJSON, _ := txBuilder.Tx.ToJSON()
+  fmt.Printf("Simple Transaction:\n%s\n", string(txJSON))
+  txHeaderCBOR, _ := txBuilder.Tx.Header.ToCBOR()
+  fmt.Printf("Transaction Header Size: %v bytes\n", len(txHeaderCBOR))
+  txBodyCBOR, _ := txBuilder.Tx.Body.ToCBOR()
+  fmt.Printf("Transaction Body Size: %v bytes\n", len(txBodyCBOR))
+  txCBOR, _ := txBuilder.Tx.ToCBOR()
+  fmt.Printf("Transaction Size: %v bytes\n\n", len(txCBOR))
 }
 
 func createMultiAssetTx(params PSL.Params) {
@@ -75,7 +73,18 @@ func createMultiAssetTx(params PSL.Params) {
   txBuilder.AddMultiAssetOutput(outputs)
   txBuilder.Build()
 
-  fmt.Printf("%+v\n", txBuilder.Tx)
+  signature, err := wrapper.Sign(txBuilder.Tx.Header.Hash)
+  if err != nil { fmt.Println(err) }
+  txBuilder.Tx.Header.Signature = signature
+
+  txJSON, _ := txBuilder.Tx.ToJSON()
+  fmt.Printf("Multi-Asset Transaction:\n%s\n", string(txJSON))
+  txHeaderCBOR, _ := txBuilder.Tx.Header.ToCBOR()
+  fmt.Printf("Transaction Header Size: %v bytes\n", len(txHeaderCBOR))
+  txBodyCBOR, _ := txBuilder.Tx.Body.ToCBOR()
+  fmt.Printf("Transaction Body Size: %v bytes\n", len(txBodyCBOR))
+  txCBOR, _ := txBuilder.Tx.ToCBOR()
+  fmt.Printf("Transaction Size: %v bytes\n\n", len(txCBOR))
 }
 
 func createMultiAddrTx(params PSL.Params) {
@@ -93,7 +102,18 @@ func createMultiAddrTx(params PSL.Params) {
   txBuilder.AddMultiAddrOutput(outputs)
   txBuilder.Build()
 
-  fmt.Printf("%+v\n", txBuilder.Tx)
+  signature, err := wrapper.Sign(txBuilder.Tx.Header.Hash)
+  if err != nil { fmt.Println(err) }
+  txBuilder.Tx.Header.Signature = signature
+
+  txJSON, _ := txBuilder.Tx.ToJSON()
+  fmt.Printf("Multi-Addr Transaction:\n%s\n", string(txJSON))
+  txHeaderCBOR, _ := txBuilder.Tx.Header.ToCBOR()
+  fmt.Printf("Transaction Header Size: %v bytes\n", len(txHeaderCBOR))
+  txBodyCBOR, _ := txBuilder.Tx.Body.ToCBOR()
+  fmt.Printf("Transaction Body Size: %v bytes\n", len(txBodyCBOR))
+  txCBOR, _ := txBuilder.Tx.ToCBOR()
+  fmt.Printf("Transaction Size: %v bytes\n\n", len(txCBOR))
 }
 
 func createRequestTx(params PSL.Params) {
@@ -110,5 +130,16 @@ func createRequestTx(params PSL.Params) {
   txBuilder.AddRequest(request)
   txBuilder.Build()
 
-  fmt.Printf("%+v\n", txBuilder.Tx)
+  signature, err := wrapper.Sign(txBuilder.Tx.Header.Hash)
+  if err != nil { fmt.Println(err) }
+  txBuilder.Tx.Header.Signature = signature
+
+  txJSON, _ := txBuilder.Tx.ToJSON()
+  fmt.Printf("Request Transaction:\n%s\n", string(txJSON))
+  txHeaderCBOR, _ := txBuilder.Tx.Header.ToCBOR()
+  fmt.Printf("Transaction Header Size: %v bytes\n", len(txHeaderCBOR))
+  txBodyCBOR, _ := txBuilder.Tx.Body.ToCBOR()
+  fmt.Printf("Transaction Body Size: %v bytes\n", len(txBodyCBOR))
+  txCBOR, _ := txBuilder.Tx.ToCBOR()
+  fmt.Printf("Transaction Size: %v bytes\n\n", len(txCBOR))
 }

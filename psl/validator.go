@@ -7,10 +7,10 @@ import(
 )
 
 type Validator struct {
-  Addr           string   `cbor: "addr"`
-  CertificateTx  string   `cbor: "certificate"`
-  Relays         []string `cbor: "relays"`
-  Status         uint     `cbor: "status"`
+  Addr           string   `cbor:"0,keyasint"`
+  CertificateTx  string   `cbor:"1,keyasint"`
+  Relays         []string `cbor:"2,keyasint,toarray"`
+  Status         uint     `cbor:"3,keyasint"`
 }
 
 func NewValidator() Validator {

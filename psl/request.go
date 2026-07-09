@@ -7,10 +7,10 @@ import(
 )
 
 type Request struct {
-  Ticker string   `cbor: "ticker"`
-  Url    string   `cbor: "url"`
-  Addr   string   `cbor: "addr"`
-  Relays []string `cbor: "relays"`
+  Ticker string   `cbor:"0,keyasint"`
+  Url    string   `cbor:"1,keyasint"`
+  Addr   string   `cbor:"2,keyasint"`
+  Relays []string `cbor:"3,keyasint,toarray"`
 }
 
 func NewRequest() Request {

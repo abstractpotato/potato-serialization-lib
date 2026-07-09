@@ -9,8 +9,8 @@ import(
 )
 
 type Transaction struct {
-  Header TxHeader `cbor: "header"`
-  Body   TxBody   `cbor: "body"`
+  Header TxHeader `cbor:"0,keyasint"`
+  Body   TxBody   `cbor:"1,keyasint"`
 }
 
 func NewTransaction() Transaction {
@@ -56,32 +56,8 @@ func (transaction *Transaction) ToJSON() ([]byte, error) {
   return jsonBytes, nil
 }
 
-func (transaction *Transaction) HeaderToCBOR() ([]byte, error) {
-  cborBytes, err := cbor.Marshal(transaction.Header)
-  if err != nil { return nil, err }
-  return cborBytes, nil
-}
-
-func (transaction *Transaction) HeaderToHex() (string, error) {
-  cborBytes, err := transaction.HeaderToCBOR()
-  if err != nil { return "", err }
-  return hex.EncodeToString(cborBytes), nil
-}
-
-func (transaction *Transaction) BodyToCBOR() ([]byte, error) {
-  cborBytes, err := cbor.Marshal(transaction.Body)
-  if err != nil { return nil, err }
-  return cborBytes, nil
-}
-
-func (transaction *Transaction) BodyToHex() (string, error) {
-  cborBytes, err := transaction.BodyToCBOR()
-  if err != nil { return "", err }
-  return hex.EncodeToString(cborBytes), nil
-}
-
 func (transaction *Transaction) Hash() error {
-  cborBytes, err := transaction.BodyToCBOR()
+  cborBytes, err := transaction.Body.ToCBOR()
   if err != nil { return err }
   transaction.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
   return nil

@@ -21,13 +21,13 @@ func (builder *TxBuilder) EstimateFee() error {
   txFeePerByte := builder.Params.TxFeePerByte
   builder.Tx.Body.Fee = minTxFee
 
-  cborBytes, err := builder.Tx.BodyToCBOR()
+  cborBytes, err := builder.Tx.Body.ToCBOR()
   if err != nil { return err }
 
   dryRunFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)
   builder.Tx.Body.Fee = dryRunFee
 
-  cborBytes, err = builder.Tx.BodyToCBOR()
+  cborBytes, err = builder.Tx.Body.ToCBOR()
   if err != nil { return err }
 
   finalFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)

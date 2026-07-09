@@ -7,18 +7,18 @@ import(
 )
 
 type TxBody struct {
-  Outputs   TxOutputs `cbor: "outputs"`
-  Data      []TxData  `cbor: "data"`
-  TTL       uint      `cbor: "ttl"`
-  Timestamp uint      `cbor: "timestamp"`
-  Network   uint      `cbor: "network"`
-  Fee       uint      `cbor: "fee"`
+  Outputs   TxOutputs `cbor:"0,keyasint"`
+  Data      []TxData  `cbor:"1,keyasint,toarray,omitempty"`
+  TTL       uint      `cbor:"2,keyasint"`
+  Timestamp uint      `cbor:"3,keyasint"`
+  Network   uint      `cbor:"4,keyasint"`
+  Fee       uint      `cbor:"5,keyasint"`
 }
 
 type TxData struct {
-  Tag  string `cbor: "tag"`
-  Data []byte `cbor: "data"`
-  Type uint   `cbor: "type"`
+  Tag  string `cbor:"0,keyasint"`
+  Data []byte `cbor:"1,keyasint"`
+  Type uint   `cbor:"2,keyasint"`
 }
 
 func TxBodyFromCBOR(cborBytes []byte) (TxBody, error) {

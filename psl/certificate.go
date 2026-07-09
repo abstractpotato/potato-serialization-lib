@@ -7,8 +7,8 @@ import(
 )
 
 type Certificate struct {
-  RequestHash string `cbor: "requestHash"`
-  Signature   []byte `cbor: "signature"`
+  RequestHash string `cbor:"0,keyasint"`
+  Signature   []byte `cbor:"1,keyasint"`
 }
 
 func NewCertificate() Certificate {
