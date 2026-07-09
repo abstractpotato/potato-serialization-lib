@@ -3,6 +3,7 @@ package psl
 import(
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
+  "encoding/json"
 )
 
 type TxHeader struct {
@@ -25,4 +26,22 @@ func TxHeaderFromHex(hexString string) (TxHeader, error) {
   header, err := TxHeaderFromCBOR(cborBytes)
   if err != nil { return TxHeader{}, err }
   return header, nil
+}
+
+func (header *TxHeader) ToCBOR() ([]byte, error) {
+  cborBytes, err := cbor.Marshal(header)
+  if err != nil { return nil, err}
+  return cborBytes, nil
+}
+
+func (header *TxHeader) ToHex() (string, error) {
+  cborBytes, err := header.ToCBOR()
+  if err != nil { return "", err }
+  return hex.EncodeToString(cborBytes), nil
+}
+
+func (header *TxHeader) ToJSON() ([]byte, error) {
+  jsonBytes, err := json.Marshal(header)
+  if err != nil { return nil, err }
+  return jsonBytes, nil
 }
