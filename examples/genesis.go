@@ -78,11 +78,7 @@ func main() {
   // sign blockCBOR with PaymentKey
   // blockBodyHex, _ := block.Body.ToHex()
   blockSignature, _ := wrapper.Sign(block.Header.Hash)
-
-  witness := PSL.Witness{}
-  witness.Addr = validator.Addr
-  witness.Signature = blockSignature
-  block.AddWitness(witness)
+  block.AddWitness(blockSignature)
 
   blockJSON, _ := block.ToJSON()
   fmt.Printf("Genesis Block:\n%+s\n", blockJSON)
