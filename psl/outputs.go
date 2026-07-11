@@ -37,3 +37,11 @@ func NewMultiAddrOutput() MultiAddrOutput {
     Addrs: make([]AddrOutput, 0),
   }
 }
+
+func (outputs *MultiAssetOutput) Add(output AssetOutput) {
+  outputs.Assets = append(outputs.Assets, output)
+}
+
+func (outputs *MultiAddrOutput) Add(output AddrOutput) {
+  outputs.Addrs = append(outputs.Addrs, output)
+}
