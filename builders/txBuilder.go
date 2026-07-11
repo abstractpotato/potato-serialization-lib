@@ -1,4 +1,4 @@
-package txBuilders
+package builders
 
 import (
   PSL "github.com/abstractpotato/potato-serialization-lib/psl"
@@ -42,6 +42,14 @@ func (builder *TxBuilder) Build() error {
   builder.EstimateFee()
   builder.Tx.Hash()
   return nil
+}
+
+func (builder *TxBuilder) Sign(privateKey []byte) error {
+  return builder.Tx.Sign(privateKey)
+}
+
+func (builder *TxBuilder) Verify() bool {
+  return builder.Tx.Verify()
 }
 
 func (builder *TxBuilder) AddSimpleOutput(output PSL.SimpleOutput) {

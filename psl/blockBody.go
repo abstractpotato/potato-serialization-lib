@@ -16,6 +16,12 @@ type BlockBody struct {
   Timestamp    uint          `cbor:"6,keyasint" json:"timestamp"`
 }
 
+func NewBlockBody() BlockBody {
+  return BlockBody{
+    Transactions: make([]Transaction, 0),
+  }
+}
+
 func BlockBodyFromCBOR(cborBytes []byte) (BlockBody, error) {
   var body BlockBody
   err := cbor.Unmarshal(cborBytes, &body)

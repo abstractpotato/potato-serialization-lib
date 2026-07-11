@@ -6,6 +6,7 @@ import(
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
   "encoding/json"
+  cardano "github.com/abstractpotato/potato-serialization-lib/cardano"
 )
 
 type Transaction struct {
@@ -15,11 +16,8 @@ type Transaction struct {
 
 func NewTransaction() Transaction {
   return Transaction{
-    Header: TxHeader{},
-    Body: TxBody{
-      Outputs: NewTxOutputs(),
-      Data: make([]TxData, 0),
-    },
+    Header: NewTxHeader(),
+    Body: NewTxBody(),
   }
 }
 
@@ -63,18 +61,51 @@ func (transaction *Transaction) Hash() error {
   return nil
 }
 
+func (transaction *Transaction) HashToBytes() []byte {
+  return []byte(transaction.Header.Hash)
+}
+
+func (transaction *Transaction) AddWitness(witness Witness) {
+  transaction.Header.AddWitness(witness)
+}
+
 func (transaction *Transaction) AddSimpleOutput(output SimpleOutput) {
-  transaction.Body.Outputs.AddSimpleOutput(output)
+  transaction.Body.AddSimpleOutput(output)
 }
 
 func (transaction *Transaction) AddMultiAssetOutput(output MultiAssetOutput) {
-  transaction.Body.Outputs.AddMultiAssetOutput(output)
+  transaction.Body.AddMultiAssetOutput(output)
 }
 
 func (transaction *Transaction) AddMultiAddrOutput(output MultiAddrOutput) {
-  transaction.Body.Outputs.AddMultiAddrOutput(output)
+  transaction.Body.AddMultiAddrOutput(output)
 }
 
 func (transaction *Transaction) AddData(data TxData) {
-  transaction.Body.Data = append(transaction.Body.Data, data)
+  transaction.Body.AddData(data)
+}
+
+func (transaction *Transaction) Sign(privateKey []byte) error {
+  hashBytes := transaction.HashToBytes()
+  signature, err := cardano.Sign(privateKey, hashBytes)
+  if err != nil { return err }
+
+  publicKey, err := cardano.MakePublicKey(privateKey[:32])
+  if err != nil { return err }
+
+  witness := Witness{
+    PublicKey: publicKey,
+    Signature: signature,
+  }
+
+  transaction.Header.AddWitness(witness)
+  return nil
+}
+
+func (transaction *Transaction) Verify() bool {
+  witness := transaction.Header.Witnesses[0]
+  vkey := witness.PublicKey
+  sig := witness.Signature
+  hashBytes := transaction.HashToBytes()
+  return cardano.Verify(vkey, sig, hashBytes)
 }

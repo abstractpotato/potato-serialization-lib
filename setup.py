@@ -7,7 +7,9 @@ from pycardano import (
     ExtendedSigningKey
 )
 
-mnemonic_phrase = getpass.getpass("Enter mnemonic phrase: ")
+# mnemonic_phrase = getpass.getpass("Enter mnemonic phrase: ")
+
+mnemonic_phrase = "brick sample second sponsor excite churn rescue tower athlete sell text friend wet forest depend hobby intact fan distance badge height pigeon curious script"
 
 try:
     print("generating signing key...")
@@ -18,6 +20,10 @@ try:
     evkey = skey.to_verification_key()
     vkey = evkey.to_non_extended()
     address = Address(payment_part=vkey.hash())
+
+    skey.save(".env/key.skey")
+    vkey.save(".env/key.vkey")
+
 except Exception as e:
     print(e)
     exit()
@@ -30,6 +36,3 @@ with open(".env/vkey", "wb") as file:
 
 with open(".env/akey", "wb") as file:
     file.write(address.to_primitive())
-
-with open(".env/addr", "w") as file:
-    file.write(address)

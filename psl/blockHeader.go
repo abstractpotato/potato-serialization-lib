@@ -6,12 +6,16 @@ import(
   "encoding/json"
 )
 
-type Witness []byte
-
 type BlockHeader struct {
   ID        uint      `cbor:"0,keyasint" json:"id"`
   Hash      string    `cbor:"1,keyasint" json:"hash"`
   Witnesses []Witness `cbor:"2,keyasint,toarray" json:"witnesses"`
+}
+
+func NewBlockHeader() BlockHeader {
+  return BlockHeader{
+    Witnesses: make([]Witness, 0),
+  }
 }
 
 func BlockHeaderFromCBOR(cborBytes []byte) (BlockHeader, error) {

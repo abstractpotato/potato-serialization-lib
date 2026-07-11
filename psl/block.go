@@ -15,12 +15,8 @@ type Block struct {
 
 func NewBlock() Block {
   return Block{
-    Header: BlockHeader{
-      Witnesses: make([]Witness, 0),
-    },
-    Body: BlockBody{
-      Transactions: make([]Transaction, 0),
-    },
+    Header: NewBlockHeader(),
+    Body: NewBlockBody(),
   }
 }
 
@@ -64,6 +60,8 @@ func (block *Block) Hash() error {
   return nil
 }
 
-func (block *Block) AddWitness(witness []byte) {
+func (block *Block) AddWitness(witness Witness) {
   block.Header.Witnesses = append(block.Header.Witnesses, witness)
 }
+
+// func (block *Block) Sign(privateKey []byte) ([]byte, error) {}

@@ -7,18 +7,29 @@ import(
 )
 
 type TxBody struct {
-  Outputs   TxOutputs `cbor:"0,keyasint" json:"outputs"`
-  Data      []TxData  `cbor:"1,keyasint,toarray,omitempty", json:"data"`
-  TTL       uint      `cbor:"2,keyasint" json:"ttl"`
-  Timestamp uint      `cbor:"3,keyasint" json:"timestamp"`
-  Network   uint      `cbor:"4,keyasint" json:"network"`
-  Fee       uint      `cbor:"5,keyasint" json:"fee"`
+  SimpleOutputs []SimpleOutput `cbor:"0,keyasint,toarray,omitempty" json:"simpleOutputs,omitempty"`
+  MultiAssetOutputs []MultiAssetOutput `cbor:"1,keyasint,toarray,omitempty" json:"multiAssetOutputs,omitempty"`
+  MultiAddrOutputs []MultiAddrOutput `cbor:"2,keyasint,toarray,omitempty" json:"multiAddrOutputs,omitempty"`
+  Data      []TxData  `cbor:"3,keyasint,toarray,omitempty", json:"data,omitempty"`
+  TTL       uint      `cbor:"4,keyasint,omitempty" json:"ttl,omitempty"`
+  Timestamp uint      `cbor:"5,keyasint" json:"timestamp"`
+  Network   uint      `cbor:"6,keyasint" json:"network"`
+  Fee       uint      `cbor:"7,keyasint" json:"fee"`
 }
 
 type TxData struct {
   Tag  string `cbor:"0,keyasint"`
   Data []byte `cbor:"1,keyasint"`
   Type uint   `cbor:"2,keyasint"`
+}
+
+func NewTxBody() TxBody {
+  return TxBody{
+    SimpleOutputs: make([]SimpleOutput, 0),
+    MultiAssetOutputs: make([]MultiAssetOutput, 0),
+    MultiAddrOutputs: make([]MultiAddrOutput, 0),
+    Data: make([]TxData, 0),
+  }
 }
 
 func TxBodyFromCBOR(cborBytes []byte) (TxBody, error) {
@@ -52,4 +63,20 @@ func (body *TxBody) ToJSON() ([]byte, error) {
   jsonBytes, err := json.Marshal(body)
   if err != nil { return nil, err }
   return jsonBytes, nil
+}
+
+func (body *TxBody) AddSimpleOutput(output SimpleOutput) {
+  body.SimpleOutputs = append(body.SimpleOutputs, output)
+}
+
+func (body *TxBody) AddMultiAssetOutput(output MultiAssetOutput) {
+  body.MultiAssetOutputs = append(body.MultiAssetOutputs, output)
+}
+
+func (body *TxBody) AddMultiAddrOutput(output MultiAddrOutput) {
+  body.MultiAddrOutputs = append(body.MultiAddrOutputs, output)
+}
+
+func (body *TxBody) AddData(data TxData) {
+  body.Data = append(body.Data, data)
 }

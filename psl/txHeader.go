@@ -7,10 +7,15 @@ import(
 )
 
 type TxHeader struct {
-  Hash      string `cbor:"0,keyasint" json:"hash"`
-  Addr      string `cbor:"1,keyasint" json:"addr"`
-  Signature []byte `cbor:"2,keyasint" json:"signature"`
-  Key       []byte `cbor:"3,keyasint,omitempty" json:"key"`
+  Hash      string    `cbor:"0,keyasint" json:"hash"`
+  Addr      string    `cbor:"1,keyasint" json:"addr"`
+  Witnesses []Witness `cbor:"2,keyasint,toarray" json:"witnesses"`
+}
+
+func NewTxHeader() TxHeader {
+  return TxHeader{
+    Witnesses: make([]Witness, 0),
+  }
 }
 
 func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {
@@ -44,4 +49,8 @@ func (header *TxHeader) ToJSON() ([]byte, error) {
   jsonBytes, err := json.Marshal(header)
   if err != nil { return nil, err }
   return jsonBytes, nil
+}
+
+func (header *TxHeader) AddWitness(witness Witness) {
+  header.Witnesses = append(header.Witnesses, witness)
 }
