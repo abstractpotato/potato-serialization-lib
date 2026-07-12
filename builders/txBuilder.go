@@ -35,13 +35,12 @@ func (builder *TxBuilder) EstimateFee() error {
   return nil
 }
 
-func (builder *TxBuilder) Build() error {
+func (builder *TxBuilder) Build() {
   builder.Tx.Body.Network = builder.Params.Network
   builder.Tx.Body.TTL = 3000 // 3 seconds
   builder.Tx.Body.Timestamp = uint(time.Now().UnixMilli())
   builder.EstimateFee()
   builder.Tx.Hash()
-  return nil
 }
 
 func (builder *TxBuilder) Sign(privateKey []byte) error {
@@ -68,15 +67,6 @@ func (builder *TxBuilder) AddData(data PSL.TxData) {
   builder.Tx.AddData(data)
 }
 
-func (builder *TxBuilder) AddRequest(request PSL.Request) error {
-  cborBytes, err := request.ToCBOR()
-  if err != nil { return err }
-
-  requestData := PSL.TxData{}
-  requestData.Tag = "validator_request"
-  requestData.Data = cborBytes
-  requestData.Type = 0
-
-  builder.AddData(requestData)
-  return nil
+func (builder *TxBuilder) AddRequest(request PSL.Request) {
+  builder.Tx.AddRequest(request)
 }

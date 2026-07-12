@@ -10,11 +10,13 @@ type TxBody struct {
   SimpleOutputs []SimpleOutput `cbor:"0,keyasint,toarray,omitempty" json:"simpleOutputs,omitempty"`
   MultiAssetOutputs []MultiAssetOutput `cbor:"1,keyasint,toarray,omitempty" json:"multiAssetOutputs,omitempty"`
   MultiAddrOutputs []MultiAddrOutput `cbor:"2,keyasint,toarray,omitempty" json:"multiAddrOutputs,omitempty"`
-  Data      []TxData  `cbor:"3,keyasint,toarray,omitempty", json:"data,omitempty"`
-  TTL       uint      `cbor:"4,keyasint,omitempty" json:"ttl,omitempty"`
-  Timestamp uint      `cbor:"5,keyasint" json:"timestamp"`
-  Network   uint      `cbor:"6,keyasint" json:"network"`
-  Fee       uint      `cbor:"7,keyasint" json:"fee"`
+  Data []TxData `cbor:"3,keyasint,toarray,omitempty" json:"data,omitempty"`
+  Request Request `cbor:"4,keyasint,omitempty", json:"request,omitempty"`
+  Certificate Certificate `cbor:"5,keyasint,omitempty" json:"certificate,omitempty"`
+  TTL uint `cbor:"5,keyasint,omitempty" json:"ttl,omitempty"`
+  Timestamp uint `cbor:"6,keyasint" json:"timestamp"`
+  Network uint `cbor:"7,keyasint" json:"network"`
+  Fee uint `cbor:"8,keyasint" json:"fee"`
 }
 
 type TxData struct {
@@ -79,4 +81,12 @@ func (body *TxBody) AddMultiAddrOutput(output MultiAddrOutput) {
 
 func (body *TxBody) AddData(data TxData) {
   body.Data = append(body.Data, data)
+}
+
+func (body *TxBody) AddRequest(request Request) {
+  body.Request = request
+}
+
+func (body *TxBody) AddCertificate(certificate Certificate) {
+  body.Certificate = certificate
 }

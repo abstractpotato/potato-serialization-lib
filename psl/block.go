@@ -6,6 +6,7 @@ import(
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
   "encoding/json"
+  cardano "github.com/abstractpotato/potato-serialization-lib/cardano"
 )
 
 type Block struct {
@@ -60,8 +61,35 @@ func (block *Block) Hash() error {
   return nil
 }
 
+func (block *Block) HashToBytes() []byte {
+  return []byte(block.Header.Hash)
+}
+
 func (block *Block) AddWitness(witness Witness) {
   block.Header.Witnesses = append(block.Header.Witnesses, witness)
 }
 
-// func (block *Block) Sign(privateKey []byte) ([]byte, error) {}
+func (block *Block) Sign(privateKey []byte) error {
+  hashBytes := block.HashToBytes()
+  signature, err := cardano.Sign(privateKey, hashBytes)
+  if err != nil { return err }
+
+  publicKey, err := cardano.MakePublicKey(privateKey[:32])
+  if err != nil { return err }
+
+  witness := Witness{
+    PublicKey: publicKey,
+    Signature: signature,
+  }
+
+  block.Header.AddWitness(witness)
+  return nil
+}
+
+func (block *Block) Verify() bool {
+  witness := block.Header.Witnesses[0]
+  vkey := witness.PublicKey
+  sig := witness.Signature
+  hashBytes := block.HashToBytes()
+  return cardano.Verify(vkey, sig, hashBytes)
+}

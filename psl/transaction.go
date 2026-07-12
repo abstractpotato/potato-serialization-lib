@@ -85,6 +85,10 @@ func (transaction *Transaction) AddData(data TxData) {
   transaction.Body.AddData(data)
 }
 
+func (transaction *Transaction) AddRequest(request Request) {
+  transaction.Body.AddRequest(request)
+}
+
 func (transaction *Transaction) Sign(privateKey []byte) error {
   hashBytes := transaction.HashToBytes()
   signature, err := cardano.Sign(privateKey, hashBytes)

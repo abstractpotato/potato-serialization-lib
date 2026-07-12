@@ -7,8 +7,10 @@ import(
 )
 
 type Certificate struct {
-  RequestHash string `cbor:"0,keyasint" json:"requestHash"`
-  Signature   []byte `cbor:"1,keyasint" json:"signature"`
+  RequestTx string   `cbor:"0,keyasint" json:"requestTx"`
+  Addr      string   `cbor:"1,keyasint" json:"addr"`
+  Relays    []string `cbor:"2,keyasint,toarray" json:"relays"`
+  Status    uint     `cbor:"3,keyasint" json:"status"`
 }
 
 func NewCertificate() Certificate {

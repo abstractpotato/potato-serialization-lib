@@ -50,3 +50,7 @@ func (header *BlockHeader) ToJSON() ([]byte, error) {
   if err != nil { return nil, err }
   return jsonBytes, nil
 }
+
+func (header *BlockHeader) AddWitness(witness Witness) {
+  header.Witnesses = append(header.Witnesses, witness)
+}
