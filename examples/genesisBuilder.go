@@ -30,9 +30,11 @@ func main() {
   params.ProtocolVersion = 0
 
   genesis := PSL.Genesis{}
+  genesis.Params = params
 
   block := PSL.NewBlock()
   block.Body.Genesis = genesis
 
-  
+
+
 }
