@@ -13,7 +13,15 @@ import "github.com/abstractpotato/potato-serialization-lib/builders"
 import "github.com/abstractpotato/potato-serialization-lib/cardano"
 ```
 
-Run Examples
+## How to run examples:
+
+1. Use `setup.py` to generate signing keys
+```
+pip install pycardano
+python3 setup.py
+```
+
+2. Run the example
 ```
 go run examples/<example_name.go>
 ```
