@@ -29,12 +29,14 @@ func main() {
   params.SlotTimeInMs = 1000
   params.ProtocolVersion = 0
 
+  // add cert
+  // add genesis seed
+
   genesis := PSL.Genesis{}
   genesis.Params = params
 
   block := PSL.NewBlock()
   block.Body.Genesis = genesis
 
-
-
+  // sign & verify
 }
