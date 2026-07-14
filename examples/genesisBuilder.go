@@ -2,8 +2,8 @@ package main
 
 import (
   "os"
-  // "fmt"
-  // "time"
+  "fmt"
+  "time"
   PSL "github.com/abstractpotato/potato-serialization-lib/psl"
 )
 
@@ -14,8 +14,8 @@ func loadPrivateKey() ([]byte, error) {
 }
 
 func main() {
-  // privateKey, err := loadPrivateKey()
-  // if err != nil { panic(err) }
+  privateKey, err := loadPrivateKey()
+  if err != nil { panic(err) }
 
   // initital protocol parameters
   params := PSL.NewParams()
@@ -29,14 +29,38 @@ func main() {
   params.SlotTimeInMs = 1000
   params.ProtocolVersion = 0
 
-  // add cert
-  // add genesis seed
+  // initial node certificate
+  cert := PSL.NewCertificate()
+  cert.RequestTx = "genesis"
+  cert.RewardAddr = "genesis"
+  cert.AddRelay("0.0.0.0:5001")
+  cert.AddRelay("0.0.0.0:5002")
+  cert.Status = 1
 
   genesis := PSL.Genesis{}
+  genesis.Seed = []byte("bonepool")
+  genesis.Certificate = cert
   genesis.Params = params
 
   block := PSL.NewBlock()
   block.Body.Genesis = genesis
+  block.Hash()
 
-  // sign & verify
+  start := time.Now()
+  err = block.Sign(privateKey)
+  if err != nil { panic(err) }
+  fmt.Printf("Signature took %s\n", time.Since(start))
+
+  blockJSON, _ := block.ToJSON()
+  fmt.Printf("Genesis Block Demo:\n%s\n", blockJSON)
+
+  blockHeaderBOR, _ := block.Header.ToCBOR()
+  fmt.Printf("Block Header Size: %v bytes\n", len(blockHeaderBOR))
+
+  blockBodyCBOR, _ := block.Body.ToCBOR()
+  fmt.Printf("Block Body Size: %v bytes\n", len(blockBodyCBOR))
+
+  start = time.Now()
+  fmt.Printf("Block Verification: %v\n", block.Verify())
+  fmt.Printf("Verification took %s\n\n", time.Since(start))
 }

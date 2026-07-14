@@ -7,14 +7,17 @@ import(
 )
 
 type Certificate struct {
-  RequestTx string   `cbor:"0,keyasint" json:"requestTx"`
-  Addr      string   `cbor:"1,keyasint" json:"addr"`
-  Relays    []string `cbor:"2,keyasint,toarray" json:"relays"`
-  Status    uint     `cbor:"3,keyasint" json:"status"`
+  RequestTx  string   `cbor:"0,keyasint" json:"requestTx"`
+  RewardAddr string   `cbor:"1,keyasint" json:"rewardAddr"`
+  VKey       []byte   `cbor:"2,keyasint" json:"vkey"`
+  Relays     []string `cbor:"3,keyasint,toarray" json:"relays"`
+  Status     uint     `cbor:"4,keyasint" json:"status"`
 }
 
 func NewCertificate() Certificate {
-  return Certificate{}
+  return Certificate{
+    Relays: make([]string, 0),
+  }
 }
 
 func CertificateFromCBOR(cborBytes []byte) (Certificate, error) {
@@ -48,4 +51,8 @@ func (certificate *Certificate) ToJSON() ([]byte, error) {
   jsonBytes, err := json.Marshal(certificate)
   if err != nil { return nil, err }
   return jsonBytes, nil
+}
+
+func (certificate *Certificate) AddRelay(relay string) {
+  certificate.Relays = append(certificate.Relays, relay)
 }
