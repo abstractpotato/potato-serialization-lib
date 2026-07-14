@@ -44,6 +44,7 @@ func main() {
 
   block := PSL.NewBlock()
   block.Body.Genesis = &genesis
+  block.Body.Timestamp = uint(time.Now().UnixMilli())
   block.Hash()
 
   start := time.Now()

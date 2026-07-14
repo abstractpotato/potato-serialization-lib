@@ -1,11 +1,12 @@
 package psl
 
 import(
-  "fmt"
-  "crypto/sha256"
+  // "fmt"
+  // "crypto/sha256"
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
   "encoding/json"
+  "golang.org/x/crypto/blake2b"
   cardano "github.com/abstractpotato/potato-serialization-lib/cardano"
 )
 
@@ -57,7 +58,8 @@ func (block *Block) ToJSON() ([]byte, error) {
 func (block *Block) Hash() error {
   cborBytes, err := block.Body.ToCBOR()
   if err != nil { return err }
-  block.Header.Hash = fmt.Sprintf("%x", sha256.Sum256(cborBytes))
+  hashBytes := blake2b.Sum256(cborBytes)
+  block.Header.Hash = hex.EncodeToString(hashBytes[:])
   return nil
 }
 
@@ -87,6 +89,7 @@ func (block *Block) Sign(privateKey []byte) error {
 }
 
 func (block *Block) Verify() bool {
+  block.Hash()
   witness := block.Header.Witnesses[0]
   vkey := witness.PublicKey
   sig := witness.Signature
