@@ -111,7 +111,7 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
 }
 
 func (transaction *Transaction) Verify() bool {
-  transaction.Hash()
+  transaction.Hash() // hash internally for externally loaded txs
   witness := transaction.Header.Witnesses[0]
   vkey := witness.PublicKey
   sig := witness.Signature

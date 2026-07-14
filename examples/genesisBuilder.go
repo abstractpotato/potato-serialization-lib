@@ -57,7 +57,7 @@ func main() {
 
   blockHeaderBOR, _ := block.Header.ToCBOR()
   fmt.Printf("Block Header Size: %v bytes\n", len(blockHeaderBOR))
-
+  
   blockBodyCBOR, _ := block.Body.ToCBOR()
   fmt.Printf("Block Body Size: %v bytes\n", len(blockBodyCBOR))
 

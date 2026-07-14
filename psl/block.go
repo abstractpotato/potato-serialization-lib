@@ -89,7 +89,7 @@ func (block *Block) Sign(privateKey []byte) error {
 }
 
 func (block *Block) Verify() bool {
-  block.Hash()
+  block.Hash() // hash internally for externally loaded blocks
   witness := block.Header.Witnesses[0]
   vkey := witness.PublicKey
   sig := witness.Signature
