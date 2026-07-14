@@ -85,8 +85,12 @@ func (transaction *Transaction) AddData(data TxData) {
   transaction.Body.AddData(data)
 }
 
-func (transaction *Transaction) AddRequest(request Request) {
+func (transaction *Transaction) AddRequest(request *Request) {
   transaction.Body.AddRequest(request)
+}
+
+func (transaction *Transaction) AddCertificate(certificate *Certificate) {
+  transaction.Body.AddCertificate(certificate)
 }
 
 func (transaction *Transaction) Sign(privateKey []byte) error {

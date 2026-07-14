@@ -67,6 +67,10 @@ func (builder *TxBuilder) AddData(data PSL.TxData) {
   builder.Tx.AddData(data)
 }
 
-func (builder *TxBuilder) AddRequest(request PSL.Request) {
+func (builder *TxBuilder) AddRequest(request *PSL.Request) {
   builder.Tx.AddRequest(request)
+}
+
+func (builder *TxBuilder) AddCertificate(certificate *PSL.Certificate) {
+  builder.Tx.AddCertificate(certificate)
 }

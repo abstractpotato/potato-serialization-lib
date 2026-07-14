@@ -151,7 +151,7 @@ func createRequestTx(params PSL.Params, privateKey []byte) {
   request.Addr = "rewards_addr"
   request.Relays = append(request.Relays, "0.0.0.0:5001")
   request.Relays = append(request.Relays, "0.0.0.0:5002")
-  txBuilder.AddRequest(request)
+  txBuilder.AddRequest(&request)
 
   txBuilder.Build()
   start := time.Now()

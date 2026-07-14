@@ -6,7 +6,7 @@ import (
 )
 
 type BlockBuilder struct {
-  Genesis PSL.Genesis
+  Seed    []byte
   Params  PSL.Params
   Block   PSL.Block
 }

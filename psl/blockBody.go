@@ -13,9 +13,9 @@ type BlockBody struct {
   Epoch        uint `cbor:"3,keyasint" json:"epoch"`
   Slot         uint `cbor:"4,keyasint" json:"slot"`
   Transactions []Transaction `cbor:"5,keyasint,toarray,omitempty" json:"transactions,omitempty"`
-  Fees         uint `cbor:"6,keyasint,omitempty" json:"fees"`
+  Fees         uint `cbor:"6,keyasint,omitzero" json:"fees,omitzero"`
   Timestamp    uint `cbor:"7,keyasint" json:"timestamp"`
-  Genesis Genesis `cbor:"8,keyasint,omitempty", json:"genesis,omitempty"`
+  Genesis *Genesis `cbor:"8,keyasint,omitempty" json:"genesis,omitempty"`
 }
 
 func NewBlockBody() BlockBody {

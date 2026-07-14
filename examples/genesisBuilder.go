@@ -43,7 +43,7 @@ func main() {
   genesis.Params = params
 
   block := PSL.NewBlock()
-  block.Body.Genesis = genesis
+  block.Body.Genesis = &genesis
   block.Hash()
 
   start := time.Now()
