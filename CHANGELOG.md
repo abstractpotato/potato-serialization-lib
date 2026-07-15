@@ -1,7 +1,7 @@
 # Change Log
 
 ## Todo
-- Complete BlockBuilder using [starch-ledger](https://github.com/abstractpotato/starch-ledger).
+- Complete BlockBuilder using [starch-pay-ledger](https://github.com/abstractpotato/starch-pay-ledger).
 
 ### July 14, 2026
 - Completed BIP32 and Blake2b-256 integration
