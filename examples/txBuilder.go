@@ -51,7 +51,7 @@ func createBasicTx(params PSL.Params, privateKey []byte) {
   txBuilder.Build()
   start := time.Now()
   err := txBuilder.Sign(privateKey)
-  if err != nil { fmt.Println(err) }
+  if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 
   txJSON, _ := txBuilder.Tx.ToJSON()
@@ -89,7 +89,7 @@ func createMultiAssetTx(params PSL.Params, privateKey []byte) {
 
   start := time.Now()
   err := txBuilder.Sign(privateKey)
-  if err != nil { fmt.Println(err) }
+  if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 
   txJSON, _ := txBuilder.Tx.ToJSON()
@@ -123,7 +123,7 @@ func createMultiAddrTx(params PSL.Params, privateKey []byte) {
 
   start := time.Now()
   err := txBuilder.Sign(privateKey)
-  if err != nil { fmt.Println(err) }
+  if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 
 
@@ -156,7 +156,7 @@ func createRequestTx(params PSL.Params, privateKey []byte) {
   txBuilder.Build()
   start := time.Now()
   err := txBuilder.Sign(privateKey)
-  if err != nil { fmt.Println(err) }
+  if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 
   txJSON, _ := txBuilder.Tx.ToJSON()
