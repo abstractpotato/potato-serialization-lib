@@ -19,7 +19,7 @@ func loadParams() PSL.Params {
   params := PSL.NewParams()
   params.Network = 0
   params.MaxBlockHeaderSize = 1100 // 128 bytes
-  params.MaxBlockBodySize = 40000000 // 40 MB or ~200k simple transactions
+  params.MaxBlockBodySize = 4000000 // 4 MB or ~15k simple transactions
   params.MaxTxSize = 4000 // 4 KB
   params.TxFeePerByte = 430
   params.MinTxFee = params.TxFeePerByte * 175 // signature size
