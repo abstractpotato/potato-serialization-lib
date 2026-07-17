@@ -67,10 +67,6 @@ func (block *Block) HashToBytes() []byte {
   return []byte(block.Header.Hash)
 }
 
-func (block *Block) AddWitness(witness Witness) {
-  block.Header.Witnesses = append(block.Header.Witnesses, witness)
-}
-
 func (block *Block) Sign(privateKey []byte) error {
   hashBytes := block.HashToBytes()
   signature, err := cardano.Sign(privateKey, hashBytes)
@@ -84,13 +80,13 @@ func (block *Block) Sign(privateKey []byte) error {
     Signature: signature,
   }
 
-  block.Header.AddWitness(witness)
+  block.Header.Witness = witness
   return nil
 }
 
 func (block *Block) Verify() bool {
   block.Hash() // hash internally for externally loaded blocks
-  witness := block.Header.Witnesses[0]
+  witness := block.Header.Witness
   vkey := witness.PublicKey
   sig := witness.Signature
   hashBytes := block.HashToBytes()

@@ -7,15 +7,13 @@ import(
 )
 
 type BlockHeader struct {
-  ID        uint      `cbor:"0,keyasint" json:"id"`
-  Hash      string    `cbor:"1,keyasint" json:"hash"`
-  Witnesses []Witness `cbor:"2,keyasint,toarray" json:"witnesses"`
+  ID      uint    `cbor:"0,keyasint" json:"id"`
+  Hash    string  `cbor:"1,keyasint" json:"hash"`
+  Witness Witness `cbor:"2,keyasint,toarray" json:"witness"`
 }
 
 func NewBlockHeader() BlockHeader {
-  return BlockHeader{
-    Witnesses: make([]Witness, 0),
-  }
+  return BlockHeader{}
 }
 
 func BlockHeaderFromCBOR(cborBytes []byte) (BlockHeader, error) {
@@ -49,8 +47,4 @@ func (header *BlockHeader) ToJSON() ([]byte, error) {
   jsonBytes, err := json.Marshal(header)
   if err != nil { return nil, err }
   return jsonBytes, nil
-}
-
-func (header *BlockHeader) AddWitness(witness Witness) {
-  header.Witnesses = append(header.Witnesses, witness)
 }
