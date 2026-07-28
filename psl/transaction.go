@@ -124,5 +124,5 @@ func (transaction *Transaction) Verify() bool {
     if !cardano.Verify(vkey, sig, hashBytes) { return false }
   }
 
-  return len(transaction.Header.Witness) != 0
+  return len(transaction.Header.Witnesses) != 0
 }
