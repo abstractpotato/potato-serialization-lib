@@ -114,16 +114,13 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
 
 func (transaction *Transaction) Verify() bool {
   transaction.Hash() // hash internally for externally loaded txs
-  witness := transaction.Header.Witnesses[0]
+  hashBytes, err := transaction.HashToBytes()
 
-  for _, witness := range transaction.Witnesses {
+  for _, witness := range transaction.Header.Witnesses {
     vkey := witness.PublicKey
     sig := witness.Signature
-    hashBytes, err := transaction.HashToBytes()
     if err != nil { return false }
-    if !cardano.Verify(vkey, sig, hashBytes) {
-      return false
-    }
+    if !cardano.Verify(vkey, sig, hashBytes) { return false }
   }
   return true
 }
