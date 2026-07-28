@@ -11,7 +11,7 @@ type TxBody struct {
   MultiAssetOutputs []MultiAssetOutput `cbor:"1,keyasint,toarray,omitempty" json:"multiAssetOutputs,omitempty"`
   MultiAddrOutputs []MultiAddrOutput `cbor:"2,keyasint,toarray,omitempty" json:"multiAddrOutputs,omitempty"`
   Data []TxData `cbor:"3,keyasint,toarray,omitempty" json:"data,omitempty"`
-  Request *Request `cbor:"4,keyasint,omitempty", json:"request,omitempty"`
+  Request *Request `cbor:"4,keyasint,omitempty" json:"request,omitempty"`
   Certificate *Certificate `cbor:"5,keyasint,omitempty" json:"certificate,omitempty"`
   TTL uint `cbor:"6,keyasint,omitempty" json:"ttl,omitempty"`
   Timestamp uint `cbor:"7,keyasint" json:"timestamp"`

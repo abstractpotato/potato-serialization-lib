@@ -94,6 +94,7 @@ func (transaction *Transaction) AddCertificate(certificate *Certificate) {
 }
 
 func (transaction *Transaction) Sign(privateKey []byte) error {
+  transaction.Hash()
   hashBytes, err := transaction.HashToBytes()
   if err != nil { return err }
 
