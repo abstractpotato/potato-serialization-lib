@@ -66,7 +66,9 @@ func (block *Block) HashToBytes() ([]byte, error) {
 }
 
 func (block *Block) Sign(privateKey []byte) error {
-  block.Hash()
+  err := block.Hash()
+  if err != nil { return err }
+
   hashBytes, err := block.HashToBytes()
   if err != nil { return err }
 
