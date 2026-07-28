@@ -35,12 +35,18 @@ func (builder *TxBuilder) EstimateFee() error {
   return nil
 }
 
-func (builder *TxBuilder) Build() {
+func (builder *TxBuilder) Build() error {
   builder.Tx.Body.Network = builder.Params.Network
   builder.Tx.Body.TTL = 3000 // 3 seconds
   builder.Tx.Body.Timestamp = uint(time.Now().UnixMilli())
-  builder.EstimateFee()
-  builder.Tx.Hash()
+
+  err := builder.EstimateFee()
+  if err != nil { return err }
+
+  err = builder.Tx.Hash()
+  if err != nil { return err }
+
+  return nil
 }
 
 func (builder *TxBuilder) Sign(privateKey []byte) error {

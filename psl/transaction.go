@@ -96,7 +96,7 @@ func (transaction *Transaction) AddCertificate(certificate *Certificate) {
 func (transaction *Transaction) Sign(privateKey []byte) error {
   err := transaction.Hash()
   if err != nil { return err }
-  
+
   hashBytes, err := transaction.HashToBytes()
   if err != nil { return err }
 
@@ -116,8 +116,11 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
 }
 
 func (transaction *Transaction) Verify() bool {
-  transaction.Hash() // hash internally for externally loaded txs
+  err := transaction.Hash() // hash internally for externally loaded txs
+  if err != nil { return false }
+
   hashBytes, err := transaction.HashToBytes()
+  if err != nil { return false }
 
   for _, witness := range transaction.Header.Witnesses {
     vkey := witness.PublicKey
