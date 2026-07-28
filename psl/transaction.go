@@ -123,5 +123,6 @@ func (transaction *Transaction) Verify() bool {
     if err != nil { return false }
     if !cardano.Verify(vkey, sig, hashBytes) { return false }
   }
-  return true
+
+  return len(transaction.Header.Witness) != 0
 }
