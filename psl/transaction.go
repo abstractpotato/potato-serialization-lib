@@ -61,8 +61,8 @@ func (transaction *Transaction) Hash() error {
   return nil
 }
 
-func (transaction *Transaction) HashToBytes() []byte {
-  return []byte(transaction.Header.Hash)
+func (transaction *Transaction) HashToBytes() ([]byte, error) {
+  return hex.DecodeString(transaction.Header.Hash)
 }
 
 func (transaction *Transaction) AddWitness(witness Witness) {
@@ -94,7 +94,9 @@ func (transaction *Transaction) AddCertificate(certificate *Certificate) {
 }
 
 func (transaction *Transaction) Sign(privateKey []byte) error {
-  hashBytes := transaction.HashToBytes()
+  hashBytes, err := transaction.HashToBytes()
+  if err != nil { return err }
+
   signature, err := cardano.Sign(privateKey, hashBytes)
   if err != nil { return err }
 
@@ -115,6 +117,7 @@ func (transaction *Transaction) Verify() bool {
   witness := transaction.Header.Witnesses[0]
   vkey := witness.PublicKey
   sig := witness.Signature
-  hashBytes := transaction.HashToBytes()
+  hashBytes, err := transaction.HashToBytes()
+  if err != nil { return false }
   return cardano.Verify(vkey, sig, hashBytes)
 }

@@ -1,8 +1,6 @@
 package psl
 
 import(
-  // "fmt"
-  // "crypto/sha256"
   "github.com/fxamacker/cbor/v2"
   "encoding/hex"
   "encoding/json"
@@ -63,12 +61,14 @@ func (block *Block) Hash() error {
   return nil
 }
 
-func (block *Block) HashToBytes() []byte {
-  return []byte(block.Header.Hash)
+func (block *Block) HashToBytes() ([]byte, error) {
+  return hex.DecodeString(block.Header.Hash)
 }
 
 func (block *Block) Sign(privateKey []byte) error {
-  hashBytes := block.HashToBytes()
+  hashBytes, err := block.HashToBytes()
+  if err != nil { return err }
+
   signature, err := cardano.Sign(privateKey, hashBytes)
   if err != nil { return err }
 
@@ -89,6 +89,7 @@ func (block *Block) Verify() bool {
   witness := block.Header.Witness
   vkey := witness.PublicKey
   sig := witness.Signature
-  hashBytes := block.HashToBytes()
+  hashBytes, err := block.HashToBytes()
+  if err != nil { return false }
   return cardano.Verify(vkey, sig, hashBytes)
 }
