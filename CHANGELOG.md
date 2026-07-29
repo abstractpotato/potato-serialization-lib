@@ -6,3 +6,8 @@
 
 ### July 16, 2026
 - Added StarchChain blocks
+
+### July 29, 2026
+- Added test `skey` to each example
+- Removed `setup.py`
+- included `PROMPS.md` for LLM Security Analysis
