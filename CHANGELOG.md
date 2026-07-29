@@ -11,3 +11,4 @@
 - Added test `skey` to each example
 - Removed `setup.py`
 - included `PROMPS.md` for LLM Security Analysis
+- optimized `Verify` and `Sign` in `transactions.go` and `block.go`

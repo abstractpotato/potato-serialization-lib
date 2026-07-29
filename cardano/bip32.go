@@ -66,6 +66,7 @@ func MakePublicKey(kL []byte) ([]byte, error) {
 }
 
 func Verify(vkey, signature, message []byte) bool {
+	if len(vkey) != 32 || len(signature) != 64 { return false }
 	publicKey := ed25519.PublicKey(vkey)
 	return ed25519.Verify(publicKey, message, signature)
 }
