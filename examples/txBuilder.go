@@ -4,7 +4,7 @@ import (
   "fmt"
   "time"
   "encoding/hex"
-  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
+  PSL "github.com/abstractpotato/potato-serialization-lib"
   Builders "github.com/abstractpotato/potato-serialization-lib/builders"
 )
 
