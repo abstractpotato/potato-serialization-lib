@@ -1,14 +1,16 @@
 package psl
 
 type SimpleOutput struct {
+  From   string `cbor:"0,keyasint" json:"from"`
   To     string `cbor:"0,keyasint" json:"to"`
   Asset  string `cbor:"1,keyasint" json:"asset"`
   Amount uint   `cbor:"2,keyasint" json:"amount"`
 }
 
 type MultiAssetOutput struct {
-  To     string        `cbor:"0,keyasint" json:"to"`
-  Assets []AssetOutput `cbor:"1,keyasint,toarray" json:"asset"`
+  From   string        `cbor:"0,keyasint" json:"from"`
+  To     string        `cbor:"1,keyasint" json:"to"`
+  Assets []AssetOutput `cbor:"2,keyasint,toarray" json:"asset"`
 }
 
 type AssetOutput struct {
@@ -17,8 +19,9 @@ type AssetOutput struct {
 }
 
 type MultiAddrOutput struct {
-  Asset  string       `cbor:"0,keyasint" json:"asset"`
-  Addrs  []AddrOutput `cbor:"1,keyasint,toarray" json:"addresses"`
+  From   string       `cbor:"0,keyasint" json:"from"`
+  To     []AddrOutput `cbor:"1,keyasint,toarray" json:"to"`
+  Asset  string       `cbor:"2,keyasint" json:"asset"`
 }
 
 type AddrOutput struct {
@@ -34,7 +37,7 @@ func NewMultiAssetOutput() MultiAssetOutput {
 
 func NewMultiAddrOutput() MultiAddrOutput {
   return MultiAddrOutput{
-    Addrs: make([]AddrOutput, 0),
+    To: make([]AddrOutput, 0),
   }
 }
 
@@ -43,5 +46,5 @@ func (outputs *MultiAssetOutput) Add(output AssetOutput) {
 }
 
 func (outputs *MultiAddrOutput) Add(output AddrOutput) {
-  outputs.Addrs = append(outputs.Addrs, output)
+  outputs.To = append(outputs.To, output)
 }

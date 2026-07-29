@@ -7,6 +7,7 @@ import(
 )
 
 type BlockBody struct {
+  ID           uint `cbor:"0,keyasint" json:"id"`
   Network      uint `cbor:"0,keyasint" json:"network"`
   PreviousHash string `cbor:"1,keyasint" json:"previousHash"`
   VRF          string `cbor:"2,keyasint" json:"vrf"`

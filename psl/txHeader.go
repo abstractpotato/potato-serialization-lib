@@ -8,8 +8,7 @@ import(
 
 type TxHeader struct {
   Hash      string    `cbor:"0,keyasint" json:"hash"`
-  Addr      string    `cbor:"1,keyasint" json:"addr"`
-  Witnesses []Witness `cbor:"2,keyasint" json:"witnesses"`
+  Witnesses []Witness `cbor:"1,keyasint" json:"witnesses"`
 }
 
 func NewTxHeader() TxHeader {

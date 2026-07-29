@@ -22,7 +22,7 @@ func NewTransaction() Transaction {
 
 func TransactionFromCBOR(cborBytes []byte) (Transaction, error) {
   var transaction Transaction
-  err := cbor.Unmarshal(cborBytes, &transaction)
+  err := strictDec.Unmarshal(cborBytes, &transaction)
   if err != nil { return NewTransaction(), err }
   return transaction, nil
 }

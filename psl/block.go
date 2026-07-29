@@ -22,7 +22,7 @@ func NewBlock() Block {
 
 func BlockFromCBOR(cborBytes []byte) (Block, error) {
   var block Block
-  err := cbor.Unmarshal(cborBytes, &block)
+  err := strictDec.Unmarshal(cborBytes, &block)
   if err != nil { return NewBlock(), err }
   return block, nil
 }

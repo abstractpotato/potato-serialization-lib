@@ -3,6 +3,8 @@ package builders
 import (
   PSL "github.com/abstractpotato/potato-serialization-lib/psl"
   "time"
+  "errors"
+  "math"
 )
 
 type TxBuilder struct {
@@ -17,20 +19,30 @@ func NewTxBuilder() TxBuilder {
 }
 
 func (builder *TxBuilder) EstimateFee() error {
+  cborBytes, err := builder.Tx.Body.ToCBOR()
+  if err != nil { return err }
+  
+  size := uint(len(cborBytes))
+  if size > builder.Params.MaxTxSize {
+    return errors.New("tx size exceeds MaxTxSize")
+  } 
+  
+  if size * builder.Params.TxFeePerByte > math.MaxUint {
+    return errors.New("fee overflow")
+  }
+  
   minTxFee := builder.Params.MinTxFee
   txFeePerByte := builder.Params.TxFeePerByte
   builder.Tx.Body.Fee = minTxFee
+  
 
-  cborBytes, err := builder.Tx.Body.ToCBOR()
-  if err != nil { return err }
-
-  dryRunFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)
+  dryRunFee := minTxFee + (size * txFeePerByte)
   builder.Tx.Body.Fee = dryRunFee
 
   cborBytes, err = builder.Tx.Body.ToCBOR()
   if err != nil { return err }
 
-  finalFee := minTxFee + (uint(len(cborBytes)) * txFeePerByte)
+  finalFee := minTxFee + (size * txFeePerByte)
   builder.Tx.Body.Fee = finalFee
   return nil
 }

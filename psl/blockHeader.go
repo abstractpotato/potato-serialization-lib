@@ -7,7 +7,6 @@ import(
 )
 
 type BlockHeader struct {
-  ID      uint    `cbor:"0,keyasint" json:"id"`
   Hash    string  `cbor:"1,keyasint" json:"hash"`
   Witness Witness `cbor:"2,keyasint" json:"witness"`
 }
