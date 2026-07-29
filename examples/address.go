@@ -24,13 +24,18 @@ func main() {
   
   fmt.Println(addr_enterprise)
   
+  valid, err := psl.VerifyAgainstPubKeys(addr_enterprise, publicKey, nil)
+  if err != nil { panic(err) }
+  
+  fmt.Println(valid)
+  
   addr_base, err := psl.PubKeysToBaseAddress(publicKey, publicKey, true)
   if err != nil { panic(err) }
   
   fmt.Println(addr_base)
   
-  valid, err := psl.VerifyAgainstPubKeys(addr_enterprise, publicKey, nil)
+  base_valid, err := psl.VerifyAgainstPubKeys(addr_base, publicKey, publicKey)
   if err != nil { panic(err) }
   
-  fmt.Println(valid)
+  fmt.Println(base_valid)
 }
