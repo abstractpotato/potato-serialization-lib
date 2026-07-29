@@ -2,6 +2,7 @@
 LLM Security Check
 ```
 Analyze this repo and report any potential security vulnerabilities.
+https://github.com/abstractpotato/potato-serialization-lib
 - ignore `setup.py` 
 - ignore `examples` dir
 - ignore `poa` dir
