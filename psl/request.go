@@ -19,7 +19,7 @@ func NewRequest() Request {
 
 func RequestFromCBOR(cborBytes []byte) (Request, error) {
   var request Request
-  err := cbor.Unmarshal(cborBytes, &request)
+  err := strictDec.Unmarshal(cborBytes, &request)
   if err != nil { return NewRequest(), err }
   return request, nil
 }

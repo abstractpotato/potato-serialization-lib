@@ -19,7 +19,7 @@ func NewTxHeader() TxHeader {
 
 func TxHeaderFromCBOR(cborBytes []byte) (TxHeader, error) {
   var header TxHeader
-  err := cbor.Unmarshal(cborBytes, &header)
+  err := strictDec.Unmarshal(cborBytes, &header)
   if err != nil { return TxHeader{}, err }
   return header, nil
 }

@@ -22,27 +22,26 @@ func (builder *TxBuilder) EstimateFee() error {
   cborBytes, err := builder.Tx.Body.ToCBOR()
   if err != nil { return err }
   
-  size := uint(len(cborBytes))
-  if size > builder.Params.MaxTxSize {
-    return errors.New("tx size exceeds MaxTxSize")
-  } 
-  
-  if size * builder.Params.TxFeePerByte > math.MaxUint {
-    return errors.New("fee overflow")
-  }
-  
+  maxTxSize := builder.Params.MaxTxSize
   minTxFee := builder.Params.MinTxFee
   txFeePerByte := builder.Params.TxFeePerByte
   builder.Tx.Body.Fee = minTxFee
   
-
+  size := uint(len(cborBytes))
+  if size > maxTxSize { return errors.New("tx size exceeds MaxTxSize") }
+  
   dryRunFee := minTxFee + (size * txFeePerByte)
   builder.Tx.Body.Fee = dryRunFee
-
+  
   cborBytes, err = builder.Tx.Body.ToCBOR()
   if err != nil { return err }
+  
+  size = uint(len(cborBytes))
+  if size > maxTxSize { return errors.New("tx size exceeds MaxTxSize") }
 
   finalFee := minTxFee + (size * txFeePerByte)
+  if finalFee > math.MaxUint { return errors.New("fee overflow") }
+  
   builder.Tx.Body.Fee = finalFee
   return nil
 }

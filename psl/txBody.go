@@ -36,7 +36,7 @@ func NewTxBody() TxBody {
 
 func TxBodyFromCBOR(cborBytes []byte) (TxBody, error) {
   var body TxBody
-  err := cbor.Unmarshal(cborBytes, &body)
+  err := strictDec.Unmarshal(cborBytes, &body)
   if err != nil { return TxBody{}, err }
   return body, nil
 }

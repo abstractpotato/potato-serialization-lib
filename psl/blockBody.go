@@ -27,7 +27,7 @@ func NewBlockBody() BlockBody {
 
 func BlockBodyFromCBOR(cborBytes []byte) (BlockBody, error) {
   var body BlockBody
-  err := cbor.Unmarshal(cborBytes, &body)
+  err := strictDec.Unmarshal(cborBytes, &body)
   if err != nil { return BlockBody{}, err }
   return body, nil
 }

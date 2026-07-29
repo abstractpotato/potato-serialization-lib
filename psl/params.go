@@ -24,7 +24,7 @@ func NewParams() Params {
 
 func ParamsFromCBOR(cborBytes []byte) (Params, error) {
   var params Params
-  err := cbor.Unmarshal(cborBytes, &params)
+  err := strictDec.Unmarshal(cborBytes, &params)
   if err != nil { return NewParams(), err }
   return params, nil
 }

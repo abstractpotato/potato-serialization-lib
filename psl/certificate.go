@@ -22,7 +22,7 @@ func NewCertificate() Certificate {
 
 func CertificateFromCBOR(cborBytes []byte) (Certificate, error) {
   var certificate Certificate
-  err := cbor.Unmarshal(cborBytes, &certificate)
+  err := strictDec.Unmarshal(cborBytes, &certificate)
   if err != nil { return NewCertificate(), err }
   return certificate, nil
 }

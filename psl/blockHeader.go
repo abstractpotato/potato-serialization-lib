@@ -17,7 +17,7 @@ func NewBlockHeader() BlockHeader {
 
 func BlockHeaderFromCBOR(cborBytes []byte) (BlockHeader, error) {
   var header BlockHeader
-  err := cbor.Unmarshal(cborBytes, &header)
+  err := strictDec.Unmarshal(cborBytes, &header)
   if err != nil { return BlockHeader{}, err }
   return header, nil
 }
