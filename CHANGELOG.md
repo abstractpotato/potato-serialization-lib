@@ -10,6 +10,6 @@
 ### July 29, 2026
 - Added test `skey` to each example
 - Removed `setup.py`
-- included `PROMPS.md` for LLM Security Analysis
-- optimized `Verify` and `Sign` in `transactions.go` and `block.go`
-- moved `addr` from `TxHeader` to Transaction Outputs and renamed `from` 
+- Included `PROMPS.md` for LLM Security Analysis
+- Optimized `Verify` and `Sign` in `transactions.go` and `block.go`
+- Moved `addr` from `TxHeader` to Transaction Outputs and renamed `from` 
