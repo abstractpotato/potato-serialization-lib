@@ -7,9 +7,9 @@ import(
 )
 
 type Account struct {
-  Addr   string          `cbor: "addr"`
-  Key    []byte          `cbor: "key"`
-  Assets map[string]uint `cbor: "assets"`
+  Addr   string          `cbor: "0,keyasint" json:"addr"`
+  Key    []byte          `cbor: "1,keyasint,omitempty" json:"vkey,omitempty"`
+  Assets map[string]uint `cbor: "2,keyasint,omitempty" json:"assets,omitempty"`
 }
 
 func NewAccount() Account {
