@@ -11,7 +11,7 @@ import (
 
 func Sign(skey, message []byte) ([]byte, error) {
   if len(skey) != 96 {
-    return nil, errors.New("skey must be 96 bytes")
+		return nil, errors.New("private key must be 96 bytes")
   }
 
   kL := skey[:32]

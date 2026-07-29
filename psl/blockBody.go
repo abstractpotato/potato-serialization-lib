@@ -8,15 +8,15 @@ import(
 
 type BlockBody struct {
   ID           uint `cbor:"0,keyasint" json:"id"`
-  Network      uint `cbor:"0,keyasint" json:"network"`
-  PreviousHash string `cbor:"1,keyasint" json:"previousHash"`
-  VRF          string `cbor:"2,keyasint" json:"vrf"`
-  Epoch        uint `cbor:"3,keyasint" json:"epoch"`
-  Slot         uint `cbor:"4,keyasint" json:"slot"`
-  Transactions []Transaction `cbor:"5,keyasint,toarray,omitempty" json:"transactions,omitempty"`
-  Fees         uint `cbor:"6,keyasint,omitzero" json:"fees,omitzero"`
-  Timestamp    uint `cbor:"7,keyasint" json:"timestamp"`
-  Genesis *Genesis `cbor:"8,keyasint,omitempty" json:"genesis,omitempty"`
+  Network      uint `cbor:"1,keyasint" json:"network"`
+  PreviousHash string `cbor:"2,keyasint" json:"previousHash"`
+  VRF          string `cbor:"3,keyasint" json:"vrf"`
+  Epoch        uint `cbor:"4,keyasint" json:"epoch"`
+  Slot         uint `cbor:"5,keyasint" json:"slot"`
+  Transactions []Transaction `cbor:"6,keyasint,toarray,omitempty" json:"transactions,omitempty"`
+  Fees         uint `cbor:"7,keyasint,omitzero" json:"fees,omitzero"`
+  Timestamp    uint `cbor:"8,keyasint" json:"timestamp"`
+  Genesis *Genesis `cbor:"9,keyasint,omitempty" json:"genesis,omitempty"`
 }
 
 func NewBlockBody() BlockBody {

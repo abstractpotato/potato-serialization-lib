@@ -6,6 +6,7 @@ import(
   "encoding/json"
   "golang.org/x/crypto/blake2b"
   cardano "github.com/abstractpotato/potato-serialization-lib/cardano"
+  "errors"
 )
 
 type Transaction struct {

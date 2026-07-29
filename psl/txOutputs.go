@@ -2,9 +2,9 @@ package psl
 
 type SimpleOutput struct {
   From   string `cbor:"0,keyasint" json:"from"`
-  To     string `cbor:"0,keyasint" json:"to"`
-  Asset  string `cbor:"1,keyasint" json:"asset"`
-  Amount uint   `cbor:"2,keyasint" json:"amount"`
+  To     string `cbor:"1,keyasint" json:"to"`
+  Asset  string `cbor:"2,keyasint" json:"asset"`
+  Amount uint   `cbor:"3,keyasint" json:"amount"`
 }
 
 type MultiAssetOutput struct {
