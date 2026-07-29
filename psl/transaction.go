@@ -116,17 +116,16 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
 }
 
 func (transaction *Transaction) Verify() bool {
-  err := transaction.Hash() // hash internally for externally loaded txs
+  cborBytes, err := transaction.Body.ToCBOR()
   if err != nil { return false }
-
-  hashBytes, err := transaction.HashToBytes()
-  if err != nil { return false }
+  
+  hashBytes := blake2b.Sum256(cborBytes)
 
   for _, witness := range transaction.Header.Witnesses {
     vkey := witness.PublicKey
     sig := witness.Signature
     if err != nil { return false }
-    if !cardano.Verify(vkey, sig, hashBytes) { return false }
+    if !cardano.Verify(vkey, sig, hashBytes[:]) { return false }
   }
 
   return len(transaction.Header.Witnesses) != 0

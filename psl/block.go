@@ -88,12 +88,14 @@ func (block *Block) Sign(privateKey []byte) error {
 }
 
 func (block *Block) Verify() bool {
-  err := block.Hash() // hash internally for externally loaded blocks
+  cborBytes, err := block.Body.ToCBOR()
   if err != nil { return false }
+  hashBytes := blake2b.Sum256(cborBytes)
+  
   witness := block.Header.Witness
   vkey := witness.PublicKey
   sig := witness.Signature
-  hashBytes, err := block.HashToBytes()
+  
   if err != nil { return false }
-  return cardano.Verify(vkey, sig, hashBytes)
+  return cardano.Verify(vkey, sig, hashBytes[:])
 }
