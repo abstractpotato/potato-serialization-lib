@@ -1,4 +1,4 @@
-package bip32
+package psl
 
 // credit to https://github.com/blinklabs-io/bursa
 
