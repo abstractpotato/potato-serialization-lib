@@ -1,7 +1,7 @@
 package builders
 
 import (
-  PSL "github.com/abstractpotato/potato-serialization-lib/psl"
+  PSL "github.com/abstractpotato/potato-serialization-lib"
   "time"
   "errors"
   "math"
