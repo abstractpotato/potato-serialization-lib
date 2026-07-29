@@ -29,8 +29,8 @@ func main() {
   
   fmt.Println(addr_base)
   
-  pubKey, err := psl.VerifyAgainstPubKeys(addr_enterprise, publicKey, nil)
+  valid, err := psl.VerifyAgainstPubKeys(addr_enterprise, publicKey, nil)
   if err != nil { panic(err) }
   
-  fmt.Println(pubKey)
+  fmt.Println(valid)
 }
