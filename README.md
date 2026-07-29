@@ -8,9 +8,7 @@ go get github.com/abstractpotato/potato-serialization-lib
 
 In Go code
 ```go
-import "github.com/abstractpotato/potato-serialization-lib/psl"
-import "github.com/abstractpotato/potato-serialization-lib/builders"
-import "github.com/abstractpotato/potato-serialization-lib/cardano"
+import "github.com/abstractpotato/potato-serialization-lib"
 ```
 
 ## How to run examples:

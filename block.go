@@ -5,7 +5,6 @@ import(
   "encoding/hex"
   "encoding/json"
   "golang.org/x/crypto/blake2b"
-  "github.com/abstractpotato/potato-serialization-lib/crypto"
 )
 
 type Block struct {
@@ -72,10 +71,10 @@ func (block *Block) Sign(privateKey []byte) error {
   hashBytes, err := block.HashToBytes()
   if err != nil { return err }
 
-  signature, err := crypto.Sign(privateKey, hashBytes)
+  signature, err := Sign(privateKey, hashBytes)
   if err != nil { return err }
 
-  publicKey, err := crypto.MakePublicKey(privateKey[:32])
+  publicKey, err := MakePublicKey(privateKey[:32])
   if err != nil { return err }
 
   witness := Witness{
@@ -97,5 +96,5 @@ func (block *Block) Verify() bool {
   sig := witness.Signature
   
   if err != nil { return false }
-  return crypto.Verify(vkey, sig, hashBytes[:])
+  return Verify(vkey, sig, hashBytes[:])
 }

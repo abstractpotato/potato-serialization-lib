@@ -4,8 +4,7 @@ import (
   "fmt"
   "time"
   "encoding/hex"
-  PSL "github.com/abstractpotato/potato-serialization-lib"
-  Builders "github.com/abstractpotato/potato-serialization-lib/builders"
+  "github.com/abstractpotato/potato-serialization-lib"
 )
 
 const skey = "c0e5981efee192773da5a3542b28da40b48638eff0bf5495dc016f4ecc0c55534b0853da95378d4ecbf184920b1dec5747212915977718b5094ef0c45ee0cfb0a8f448cbb86544765fa7ae7a0ef604768c10054de52498d59ba00995ca6ec66696bcefe574605f16a8166e3219a1a012fc04c6f1929003917f9f805784930784"
@@ -16,10 +15,9 @@ func GetPrivateKey() []byte {
   return privateKey[:96]
 }
 
-
-func loadParams() PSL.Params {
+func loadParams() psl.Params {
   // initital protocol parameters
-  params := PSL.NewParams()
+  params := psl.NewParams()
   params.Network = 0
   params.MaxBlockHeaderSize = 1100 // 128 bytes
   params.MaxBlockBodySize = 4000000 // 4 MB or ~15k simple transactions
@@ -32,11 +30,11 @@ func loadParams() PSL.Params {
   return params
 }
 
-func createBasicTx(params PSL.Params, privateKey []byte) PSL.Transaction {
-  txBuilder := Builders.NewTxBuilder()
+func createBasicTx(params psl.Params, privateKey []byte) psl.Transaction {
+  txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
-  output := PSL.SimpleOutput{}
+  output := psl.SimpleOutput{}
   output.To = "target_cardano_addr"
   output.Asset = "policy_id+asset_name"
   output.Amount = 10000
@@ -55,7 +53,7 @@ func main () {
 
   tx := createBasicTx(params, privateKey)
 
-  blockBuilder := Builders.NewBlockBuilder()
+  blockBuilder := psl.NewBlockBuilder()
   blockBuilder.Params = params
   blockBuilder.Seed = []byte("bonepool")
   blockBuilder.AddTx(tx)

@@ -1,20 +1,19 @@
-package builders
+package psl
 
 import (
-  PSL "github.com/abstractpotato/potato-serialization-lib"
   "time"
   "errors"
   "math"
 )
 
 type TxBuilder struct {
-  Params PSL.Params
-  Tx     PSL.Transaction
+  Params Params
+  Tx     Transaction
 }
 
 func NewTxBuilder() TxBuilder {
   return TxBuilder{
-    Tx: PSL.NewTransaction(),
+    Tx: NewTransaction(),
   }
 }
 
@@ -68,26 +67,26 @@ func (builder *TxBuilder) Verify() bool {
   return builder.Tx.Verify()
 }
 
-func (builder *TxBuilder) AddSimpleOutput(output PSL.SimpleOutput) {
+func (builder *TxBuilder) AddSimpleOutput(output SimpleOutput) {
   builder.Tx.AddSimpleOutput(output)
 }
 
-func (builder *TxBuilder) AddMultiAssetOutput(output PSL.MultiAssetOutput) {
+func (builder *TxBuilder) AddMultiAssetOutput(output MultiAssetOutput) {
   builder.Tx.AddMultiAssetOutput(output)
 }
 
-func (builder *TxBuilder) AddMultiAddrOutput(output PSL.MultiAddrOutput) {
+func (builder *TxBuilder) AddMultiAddrOutput(output MultiAddrOutput) {
   builder.Tx.AddMultiAddrOutput(output)
 }
 
-func (builder *TxBuilder) AddData(data PSL.TxData) {
+func (builder *TxBuilder) AddData(data TxData) {
   builder.Tx.AddData(data)
 }
 
-func (builder *TxBuilder) AddRequest(request *PSL.Request) {
+func (builder *TxBuilder) AddRequest(request *Request) {
   builder.Tx.AddRequest(request)
 }
 
-func (builder *TxBuilder) AddCertificate(certificate *PSL.Certificate) {
+func (builder *TxBuilder) AddCertificate(certificate *Certificate) {
   builder.Tx.AddCertificate(certificate)
 }

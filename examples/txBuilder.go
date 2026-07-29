@@ -4,8 +4,7 @@ import (
   "fmt"
   "time"
   "encoding/hex"
-  PSL "github.com/abstractpotato/potato-serialization-lib"
-  Builders "github.com/abstractpotato/potato-serialization-lib/builders"
+  "github.com/abstractpotato/potato-serialization-lib"
 )
 
 const skey = "c0e5981efee192773da5a3542b28da40b48638eff0bf5495dc016f4ecc0c55534b0853da95378d4ecbf184920b1dec5747212915977718b5094ef0c45ee0cfb0a8f448cbb86544765fa7ae7a0ef604768c10054de52498d59ba00995ca6ec66696bcefe574605f16a8166e3219a1a012fc04c6f1929003917f9f805784930784"
@@ -16,35 +15,34 @@ func GetPrivateKey() []byte {
   return privateKey[:96]
 }
 
-
 func main() {
   // sample param data
-  params := PSL.NewParams()
+  params := psl.NewParams()
   params.Network = 0
   params.MaxTxSize = 4000
   params.TxFeePerByte = 430
   params.MinTxFee = params.TxFeePerByte * 175 // signature size
-
+  
   privateKey := GetPrivateKey()
-
+  
   // simple 1 receiver 1 asset transaction
   createBasicTx(params, privateKey)
 
   // 1 receiver multiple asset transaction
   createMultiAssetTx(params, privateKey)
-
+  
   // 1 asset multiple receivers transaction
   createMultiAddrTx(params, privateKey)
-
+  
   // validator registration
   createRequestTx(params, privateKey)
 }
 
-func createBasicTx(params PSL.Params, privateKey []byte) {
-  txBuilder := Builders.NewTxBuilder()
+func createBasicTx(params psl.Params, privateKey []byte) {
+  txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
-  output := PSL.SimpleOutput{}
+  output := psl.SimpleOutput{}
   output.To = "target_cardano_addr"
   output.Asset = "policy_id+asset_name"
   output.Amount = 10000
@@ -70,19 +68,19 @@ func createBasicTx(params PSL.Params, privateKey []byte) {
   fmt.Printf("Verification took %s\n\n", time.Since(start))
 }
 
-func createMultiAssetTx(params PSL.Params, privateKey []byte) {
-  txBuilder := Builders.NewTxBuilder()
+func createMultiAssetTx(params psl.Params, privateKey []byte) {
+  txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
-  asset0 := PSL.AssetOutput{}
+  asset0 := psl.AssetOutput{}
   asset0.Asset = "policy_id+asset_name"
   asset0.Amount = 1000
 
-  asset1 := PSL.AssetOutput{}
+  asset1 := psl.AssetOutput{}
   asset1.Asset = "policy_id+asset_name"
   asset1.Amount = 1000
 
-  output := PSL.NewMultiAssetOutput()
+  output := psl.NewMultiAssetOutput()
   output.Add(asset0)
   output.Add(asset1)
 
@@ -108,15 +106,15 @@ func createMultiAssetTx(params PSL.Params, privateKey []byte) {
   fmt.Printf("Verification took %s\n\n", time.Since(start))
 }
 
-func createMultiAddrTx(params PSL.Params, privateKey []byte) {
-  txBuilder := Builders.NewTxBuilder()
+func createMultiAddrTx(params psl.Params, privateKey []byte) {
+  txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
-  addr0 := PSL.AddrOutput{}
+  addr0 := psl.AddrOutput{}
   addr0.Addr = "target_cardano_addr"
   addr0.Amount = 1000
 
-  outputs := PSL.NewMultiAddrOutput()
+  outputs := psl.NewMultiAddrOutput()
   outputs.Add(addr0)
   outputs.Add(addr0)
 
@@ -143,11 +141,11 @@ func createMultiAddrTx(params PSL.Params, privateKey []byte) {
   fmt.Printf("Verification took %s\n\n", time.Since(start))
 }
 
-func createRequestTx(params PSL.Params, privateKey []byte) {
-  txBuilder := Builders.NewTxBuilder()
+func createRequestTx(params psl.Params, privateKey []byte) {
+  txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
-  request := PSL.NewRequest()
+  request := psl.NewRequest()
   request.Ticker = "bone"
   request.Url = "https://bonepool.com"
   request.Addr = "rewards_addr"

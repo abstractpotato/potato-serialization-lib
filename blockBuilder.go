@@ -1,19 +1,18 @@
-package builders
+package psl
 
 import (
-  PSL "github.com/abstractpotato/potato-serialization-lib"
   "time"
 )
 
 type BlockBuilder struct {
   Seed    []byte
-  Params  PSL.Params
-  Block   PSL.Block
+  Params  Params
+  Block   Block
 }
 
 func NewBlockBuilder() BlockBuilder {
   return BlockBuilder{
-    Block: PSL.NewBlock(),
+    Block: NewBlock(),
   }
 }
 
@@ -31,7 +30,7 @@ func (builder *BlockBuilder) Build() {
   builder.Block.Hash()
 }
 
-func (builder *BlockBuilder) AddTx(transaction PSL.Transaction) {
+func (builder *BlockBuilder) AddTx(transaction Transaction) {
   builder.Block.Body.AddTx(transaction)
 }
 

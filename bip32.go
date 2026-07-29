@@ -1,4 +1,4 @@
-package crypto
+package psl
 
 // credit to https://github.com/blinklabs-io/bursa
 
