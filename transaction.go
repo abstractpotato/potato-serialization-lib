@@ -5,7 +5,7 @@ import(
   "encoding/hex"
   "encoding/json"
   "golang.org/x/crypto/blake2b"
-  cardano "github.com/abstractpotato/potato-serialization-lib/cardano"
+  "github.com/abstractpotato/potato-serialization-lib/crypto"
 )
 
 type Transaction struct {
@@ -100,10 +100,10 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
   hashBytes, err := transaction.HashToBytes()
   if err != nil { return err }
 
-  signature, err := cardano.Sign(privateKey, hashBytes)
+  signature, err := crypto.Sign(privateKey, hashBytes)
   if err != nil { return err }
 
-  publicKey, err := cardano.MakePublicKey(privateKey[:32])
+  publicKey, err := crypto.MakePublicKey(privateKey[:32])
   if err != nil { return err }
 
   witness := Witness{
@@ -125,7 +125,7 @@ func (transaction *Transaction) Verify() bool {
     vkey := witness.PublicKey
     sig := witness.Signature
     if err != nil { return false }
-    if !cardano.Verify(vkey, sig, hashBytes[:]) { return false }
+    if !crypto.Verify(vkey, sig, hashBytes[:]) { return false }
   }
 
   return len(transaction.Header.Witnesses) != 0
