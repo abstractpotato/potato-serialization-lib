@@ -12,4 +12,5 @@
 - Removed `setup.py`
 - Included `PROMPS.md` for LLM Security Analysis
 - Optimized `Verify` and `Sign` in `transactions.go` and `block.go`
-- Moved `addr` from `TxHeader` to Transaction Outputs and renamed `from` 
+- Moved `addr` from `TxHeader` to Transaction Outputs and renamed `from`
+- reduced import complexity
