@@ -16,3 +16,7 @@
 - reduced import complexity
 - Bech32 integration
 - Shelley address support (extended/base)
+
+### July 30, 2026
+- removed witness list for simpler transactions
+- removed support for multi-sig (this can be added later if needed)

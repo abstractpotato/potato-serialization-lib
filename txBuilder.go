@@ -67,26 +67,30 @@ func (builder *TxBuilder) Verify() bool {
   return builder.Tx.Verify()
 }
 
-func (builder *TxBuilder) AddSimpleOutput(output SimpleOutput) {
-  builder.Tx.AddSimpleOutput(output)
+func (builder *TxBuilder) SetSender(addr string) {
+  builder.Tx.SetSender(addr)
 }
 
-func (builder *TxBuilder) AddMultiAssetOutput(output MultiAssetOutput) {
-  builder.Tx.AddMultiAssetOutput(output)
+func (builder *TxBuilder) SetSimpleOutput(output *SimpleOutput) {
+  builder.Tx.Body.SimpleOutput = output
 }
 
-func (builder *TxBuilder) AddMultiAddrOutput(output MultiAddrOutput) {
-  builder.Tx.AddMultiAddrOutput(output)
+func (builder *TxBuilder) SetMultiAssetOutput(output *MultiAssetOutput) {
+  builder.Tx.Body.MultiAssetOutput = output
+}
+
+func (builder *TxBuilder) SetMultiAddrOutput(output *MultiAddrOutput) {
+  builder.Tx.Body.MultiAddrOutput = output
+}
+
+func (builder *TxBuilder) SetRequest(request *Request) {
+  builder.Tx.SetRequest(request)
+}
+
+func (builder *TxBuilder) AddCertificate(certificate *Certificate) {
+  builder.Tx.SetCertificate(certificate)
 }
 
 func (builder *TxBuilder) AddData(data TxData) {
   builder.Tx.AddData(data)
-}
-
-func (builder *TxBuilder) AddRequest(request *Request) {
-  builder.Tx.AddRequest(request)
-}
-
-func (builder *TxBuilder) AddCertificate(certificate *Certificate) {
-  builder.Tx.AddCertificate(certificate)
 }

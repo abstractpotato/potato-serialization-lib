@@ -62,7 +62,7 @@ func IsValidAddress(addrStr string) bool {
   return err == nil
 }
 
-func AddressBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
+func AddrBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
   pk := crypto.PubKey(publicKey)
   
   addr, err := cardano.NewAddress(addrStr)

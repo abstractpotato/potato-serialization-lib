@@ -7,12 +7,13 @@ import(
 )
 
 type TxBody struct {
-  SimpleOutputs []SimpleOutput `cbor:"1,keyasint,toarray,omitempty" json:"simpleOutputs,omitempty"`
-  MultiAssetOutputs []MultiAssetOutput `cbor:"2,keyasint,toarray,omitempty" json:"multiAssetOutputs,omitempty"`
-  MultiAddrOutputs []MultiAddrOutput `cbor:"3,keyasint,toarray,omitempty" json:"multiAddrOutputs,omitempty"`
-  Data []TxData `cbor:"4,keyasint,toarray,omitempty" json:"data,omitempty"`
-  Request *Request `cbor:"5,keyasint,omitempty" json:"request,omitempty"`
-  Certificate *Certificate `cbor:"6,keyasint,omitempty" json:"certificate,omitempty"`
+  From string `cbor:"0,keyasint" json:"from"`
+  SimpleOutput *SimpleOutput `cbor:"1,keyasint,omitempty" json:"simple_output,omitempty"`
+  MultiAssetOutput *MultiAssetOutput `cbor:"2,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
+  MultiAddrOutput *MultiAddrOutput `cbor:"3,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
+  Request *Request `cbor:"4,keyasint,omitempty" json:"request,omitempty"`
+  Certificate *Certificate `cbor:"5,keyasint,omitempty" json:"certificate,omitempty"`
+  Data []TxData `cbor:"6,keyasint,toarray,omitempty" json:"data,omitempty"`
   TTL uint `cbor:"7,keyasint,omitempty" json:"ttl,omitempty"`
   Timestamp uint `cbor:"8,keyasint" json:"timestamp"`
   Network uint `cbor:"9,keyasint" json:"network"`
@@ -27,9 +28,6 @@ type TxData struct {
 
 func NewTxBody() TxBody {
   return TxBody{
-    SimpleOutputs: make([]SimpleOutput, 0),
-    MultiAssetOutputs: make([]MultiAssetOutput, 0),
-    MultiAddrOutputs: make([]MultiAddrOutput, 0),
     Data: make([]TxData, 0),
   }
 }
@@ -67,26 +65,6 @@ func (body *TxBody) ToJSON() ([]byte, error) {
   return jsonBytes, nil
 }
 
-func (body *TxBody) AddSimpleOutput(output SimpleOutput) {
-  body.SimpleOutputs = append(body.SimpleOutputs, output)
-}
-
-func (body *TxBody) AddMultiAssetOutput(output MultiAssetOutput) {
-  body.MultiAssetOutputs = append(body.MultiAssetOutputs, output)
-}
-
-func (body *TxBody) AddMultiAddrOutput(output MultiAddrOutput) {
-  body.MultiAddrOutputs = append(body.MultiAddrOutputs, output)
-}
-
 func (body *TxBody) AddData(data TxData) {
   body.Data = append(body.Data, data)
-}
-
-func (body *TxBody) AddRequest(request *Request) {
-  body.Request = request
-}
-
-func (body *TxBody) AddCertificate(certificate *Certificate) {
-  body.Certificate = certificate
 }

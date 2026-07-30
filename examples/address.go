@@ -25,11 +25,11 @@ func main() {
   fmt.Println(addrB)
   fmt.Println(psl.IsValidAddress(addrB))
   
-  value, err := psl.AddressBelongsToPubKey(addr, publicKey)
+  value, err := psl.AddrBelongsToPubKey(addr, publicKey)
   if err != nil { panic(err) }
   fmt.Println(value)
   
-  valueB, err := psl.AddressBelongsToPubKey(addrB, publicKey)
+  valueB, err := psl.AddrBelongsToPubKey(addrB, publicKey)
   if err != nil { panic(err) }
   fmt.Println(valueB)
 }

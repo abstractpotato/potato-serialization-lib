@@ -64,32 +64,32 @@ func (transaction *Transaction) HashToBytes() ([]byte, error) {
   return hex.DecodeString(transaction.Header.Hash)
 }
 
-func (transaction *Transaction) AddWitness(witness Witness) {
-  transaction.Header.AddWitness(witness)
+func (transaction *Transaction) SetSender(addr string) {
+  transaction.Body.From = addr
 }
 
-func (transaction *Transaction) AddSimpleOutput(output SimpleOutput) {
-  transaction.Body.AddSimpleOutput(output)
+func (transaction *Transaction) SetSimpleOutput(output *SimpleOutput) {
+  transaction.Body.SimpleOutput = output
 }
 
-func (transaction *Transaction) AddMultiAssetOutput(output MultiAssetOutput) {
-  transaction.Body.AddMultiAssetOutput(output)
+func (transaction *Transaction) SetMultiAssetOutput(output *MultiAssetOutput) {
+  transaction.Body.MultiAssetOutput = output
 }
 
-func (transaction *Transaction) AddMultiAddrOutput(output MultiAddrOutput) {
-  transaction.Body.AddMultiAddrOutput(output)
+func (transaction *Transaction) SetMultiAddrOutput(output *MultiAddrOutput) {
+  transaction.Body.MultiAddrOutput = output
+}
+
+func (transaction *Transaction) SetRequest(request *Request) {
+  transaction.Body.Request = request
+}
+
+func (transaction *Transaction) SetCertificate(certificate *Certificate) {
+  transaction.Body.Certificate = certificate
 }
 
 func (transaction *Transaction) AddData(data TxData) {
   transaction.Body.AddData(data)
-}
-
-func (transaction *Transaction) AddRequest(request *Request) {
-  transaction.Body.AddRequest(request)
-}
-
-func (transaction *Transaction) AddCertificate(certificate *Certificate) {
-  transaction.Body.AddCertificate(certificate)
 }
 
 func (transaction *Transaction) Sign(privateKey []byte) error {
@@ -110,22 +110,23 @@ func (transaction *Transaction) Sign(privateKey []byte) error {
     Signature: signature,
   }
 
-  transaction.Header.AddWitness(witness)
+  transaction.Header.Witness = witness
   return nil
 }
 
 func (transaction *Transaction) Verify() bool {
+  vkey := transaction.Header.Witness.PublicKey
+  sig := transaction.Header.Witness.Signature
+  if len(vkey) == 0 || len(sig) == 0 { return false }
+  
   cborBytes, err := transaction.Body.ToCBOR()
   if err != nil { return false }
   
   hashBytes := blake2b.Sum256(cborBytes)
-
-  for _, witness := range transaction.Header.Witnesses {
-    vkey := witness.PublicKey
-    sig := witness.Signature
-    if err != nil { return false }
-    if !Verify(vkey, sig, hashBytes[:]) { return false }
-  }
-
-  return len(transaction.Header.Witnesses) != 0
+  valid_signature := Verify(vkey, sig, hashBytes[:])
+  
+  valid_addr, err := AddrBelongsToPubKey(transaction.Body.From, vkey)
+  if err != nil { return false }
+  
+  return valid_signature && valid_addr
 }
