@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-  privateKey, err := psl.GenerateKey("")
+  privateKey, err := psl.GenerateKeys("")
   if err != nil { panic(err) }
   fmt.Println(len(privateKey))
   
@@ -19,7 +19,7 @@ func main() {
   fmt.Println(addr)
   fmt.Println(psl.IsValidAddress(addr))
   
-  stakeKey, err := psl.GenerateKey("")
+  stakeKey, err := psl.GenerateKeys("")
   if err != nil { panic(err) }
   addrB, err := psl.GenerateBaseAddr(privateKey, stakeKey, true)
   fmt.Println(addrB)

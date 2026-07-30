@@ -7,7 +7,7 @@ import (
 )
 
 func GetPrivateKey() []byte {
-  skey, err := psl.GenerateKey("")
+  skey, err := psl.GenerateKeys("")
   if err != nil { panic(err) }
   return skey
 }

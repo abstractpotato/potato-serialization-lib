@@ -6,7 +6,7 @@ import (
 	"github.com/echovl/cardano-go/crypto"
 )
 
-func GenerateKey(password string) ([]byte, error) {
+func GenerateKeys(password string) ([]byte, error) {
 	entropy := make([]byte, 32)
   if _, err := rand.Read(entropy); err != nil { return nil, err }
 
