@@ -8,7 +8,7 @@ import(
 
 type Account struct {
   Addr   string          `cbor: "0,keyasint" json:"addr"`
-  Assets map[string]uint `cbor: "2,keyasint,omitempty" json:"assets,omitempty"`
+  Assets map[string]uint `cbor: "1,keyasint,omitempty" json:"assets,omitempty"`
 }
 
 func NewAccount() Account {
