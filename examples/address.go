@@ -8,11 +8,11 @@ import (
 func main() {
   privateKey, err := psl.GenerateKeys("")
   if err != nil { panic(err) }
-  fmt.Println(len(privateKey))
+  fmt.Println(privateKey)
   
-  vkey, err := psl.GetPublicKey(privateKey[:32])
+  publicKey, err := psl.GetPublicKey(privateKey[:32])
   if err != nil { panic(err) }
-  fmt.Println(len(vkey))
+  fmt.Println(publicKey)
   
   addr, err := psl.GenerateEnterpriseAddr(privateKey, false)
   if err != nil { panic(err) }
@@ -24,9 +24,6 @@ func main() {
   addrB, err := psl.GenerateBaseAddr(privateKey, stakeKey, false)
   fmt.Println(addrB)
   fmt.Println(psl.IsValidAddress(addrB))
-  
-  publicKey, err := psl.GetPublicKey(privateKey[:32])
-  if err != nil { panic(err) }
   
   value, err := psl.AddressBelongsToPubKey(addr, publicKey)
   if err != nil { panic(err) }
