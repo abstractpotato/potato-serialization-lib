@@ -20,3 +20,4 @@
 ### July 30, 2026
 - removed witness list for simpler transactions
 - removed support for multi-sig (this can be added later if needed)
+- Replaced `MultiAddrOutput` with `AirDropOutput`
