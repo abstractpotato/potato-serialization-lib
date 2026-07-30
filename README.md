@@ -11,15 +11,7 @@ In Go code
 import "github.com/abstractpotato/potato-serialization-lib"
 ```
 
-## How to run examples:
-
-1. Use `setup.py` to generate signing keys
-```
-pip install pycardano
-python3 setup.py
-```
-
-2. Run the example
+Run examples
 ```
 go run examples/<example_name.go>
 ```
