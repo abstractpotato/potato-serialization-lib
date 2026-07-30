@@ -1,5 +1,6 @@
+# Prompts
 
-LLM Security Check Helper
+## LLM Security Check Helper
 ```
 Analyze this repo and report any potential security vulnerabilities.
 https://github.com/abstractpotato/potato-serialization-lib
