@@ -8,7 +8,7 @@ import (
 )
 
 func GenerateKeys(password string) ([]byte, error) {
-	entropy := make([]byte, 32)
+  entropy := make([]byte, 32)
   if _, err := rand.Read(entropy); err != nil { return nil, err }
 
   rootXPrv := crypto.NewXPrvKeyFromEntropy(entropy, password)
@@ -21,13 +21,13 @@ func GenerateEnterpriseAddr(privateKey []byte, mainnet bool) (string, error) {
 
   pub := pk.PubKey()
 
-	keyHash, err := pub.Hash() // blake2b-224
+  keyHash, err := pub.Hash() // blake2b-224
   if err != nil { return "", err }
 
-	paymentCred := cardano.StakeCredential{
-		Type:    cardano.KeyCredential,
-		KeyHash: keyHash,
-	}
+  paymentCred := cardano.StakeCredential{
+    Type:    cardano.KeyCredential,
+    KeyHash: keyHash,
+  }
 
   if mainnet {
     addr, err := cardano.NewEnterpriseAddress(cardano.Mainnet, paymentCred)
@@ -58,7 +58,7 @@ func GenerateBaseAddr(privateKey, stakeKey []byte, mainnet bool) (string, error)
 
 func IsValidAddress(addrStr string) bool {
   _, err := cardano.NewAddress(addrStr)
-	return err == nil
+  return err == nil
 }
 
 func AddressBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
@@ -69,7 +69,7 @@ func AddressBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
   if addr.Payment.Type != cardano.KeyCredential { return false, nil }
   
   expected, err := pk.Hash()
-	if err != nil { return false, err }
+  if err != nil { return false, err }
   
   return bytes.Equal(addr.Payment.KeyHash, expected), nil
 }
