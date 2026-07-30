@@ -64,6 +64,10 @@ func (block *Block) HashToBytes() ([]byte, error) {
   return hex.DecodeString(block.Header.Hash)
 }
 
+func (block *Block) SetGenesis(genesis *Genesis) {
+  block.Body.Genesis = genesis
+}
+
 func (block *Block) Sign(privateKey []byte) error {
   err := block.Hash()
   if err != nil { return err }

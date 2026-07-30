@@ -34,6 +34,10 @@ func (builder *BlockBuilder) AddTx(transaction Transaction) {
   builder.Block.Body.AddTx(transaction)
 }
 
+func (builder *BlockBuilder) SetGenesis(genesis *Genesis) {
+  builder.Block.SetGenesis(genesis)
+}
+
 func (builder *BlockBuilder) Sign(privateKey []byte) error {
   return builder.Block.Sign(privateKey)
 }

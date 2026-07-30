@@ -20,23 +20,24 @@ func loadParams() psl.Params {
   params.MaxBlockBodySize = 4000000 // 4 MB or ~15k simple transactions
   params.MaxTxSize = 4000 // 4 KB
   params.TxFeePerByte = 430
-  params.MinTxFee = params.TxFeePerByte * 175 // signature size
+  params.MinTxFee = params.TxFeePerByte * 173 // signature size
   params.SlotsPerEpoch = 432000
   params.SlotTimeInMs = 1000
   params.ProtocolVersion = 0
   return params
 }
 
-func createBasicTx(params psl.Params, privateKey []byte) psl.Transaction {
+func createBasicTx(params psl.Params, privateKey []byte, addr string) psl.Transaction {
   txBuilder := psl.NewTxBuilder()
   txBuilder.Params = params
 
   output := psl.SimpleOutput{}
-  output.To = "target_cardano_addr"
-  output.Asset = "policy_id+asset_name"
+  output.To = addr
+  output.Asset = "3d77d63dfa6033be98021417e08e3368cc80e67f8d7afa196aaa0b3953746172636820546f6b656e"
   output.Amount = 10000
 
-  txBuilder.AddSimpleOutput(output)
+  txBuilder.SetSimpleOutput(&output)
+  txBuilder.SetSender(addr)
   txBuilder.Build()
   err := txBuilder.Sign(privateKey)
   if err != nil { panic(err) }
@@ -45,10 +46,11 @@ func createBasicTx(params psl.Params, privateKey []byte) psl.Transaction {
 
 func main () {
   privateKey := GetPrivateKey()
-
+  addr, err := psl.GenerateEnterpriseAddr(privateKey, true)
+  if err != nil { panic(err) }
+  
   params := loadParams()
-
-  tx := createBasicTx(params, privateKey)
+  tx := createBasicTx(params, privateKey, addr)
 
   blockBuilder := psl.NewBlockBuilder()
   blockBuilder.Params = params
@@ -57,7 +59,7 @@ func main () {
   blockBuilder.Build()
 
   start := time.Now()
-  err := blockBuilder.Sign(privateKey)
+  err = blockBuilder.Sign(privateKey)
   if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 

@@ -7,8 +7,8 @@ import(
 )
 
 type TxBody struct {
-  From string `cbor:"0,keyasint" json:"from"`
-  SimpleOutput *SimpleOutput `cbor:"1,keyasint,omitempty" json:"simple_output,omitempty"`
+  From         string `cbor:"0,keyasint" json:"from"`
+  SimpleOutput     *SimpleOutput `cbor:"1,keyasint,omitempty" json:"simple_output,omitempty"`
   MultiAssetOutput *MultiAssetOutput `cbor:"2,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
   MultiAddrOutput *MultiAddrOutput `cbor:"3,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
   Request *Request `cbor:"4,keyasint,omitempty" json:"request,omitempty"`

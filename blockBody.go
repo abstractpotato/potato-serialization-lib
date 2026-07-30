@@ -16,7 +16,7 @@ type BlockBody struct {
   Transactions []Transaction `cbor:"6,keyasint,toarray,omitempty" json:"transactions,omitempty"`
   Fees         uint `cbor:"7,keyasint,omitzero" json:"fees,omitzero"`
   Timestamp    uint `cbor:"8,keyasint" json:"timestamp"`
-  Genesis *Genesis `cbor:"9,keyasint,omitempty" json:"genesis,omitempty"`
+  Genesis      *Genesis `cbor:"9,keyasint,omitempty" json:"genesis,omitempty"`
 }
 
 func NewBlockBody() BlockBody {
