@@ -16,7 +16,7 @@ func Sign(skey, message []byte) ([]byte, error) {
 
   kL := skey[:32]
   kR := skey[32:64]
-	publicKey, err := MakePublicKey(kL)
+	publicKey, err := GetPublicKey(kL)
   if err != nil { return nil, err }
 
   nonceHash := sha512.New()
@@ -50,7 +50,7 @@ func Sign(skey, message []byte) ([]byte, error) {
   return signature, nil
 }
 
-func MakePublicKey(kL []byte) ([]byte, error) {
+func GetPublicKey(kL []byte) ([]byte, error) {
 	if len(kL) != 32 { return nil, errors.New("kL must be 32 bytes") }
 
   padded := make([]byte, 64)

@@ -74,7 +74,7 @@ func (block *Block) Sign(privateKey []byte) error {
   signature, err := Sign(privateKey, hashBytes)
   if err != nil { return err }
 
-  publicKey, err := MakePublicKey(privateKey[:32])
+  publicKey, err := GetPublicKey(privateKey[:32])
   if err != nil { return err }
 
   witness := Witness{

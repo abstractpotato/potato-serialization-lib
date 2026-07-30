@@ -69,9 +69,3 @@ func AddressBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
   
   return bytes.Equal(addr.Payment.KeyHash, expected), nil
 }
-
-// func GetPublicKey(privateKey []byte) () {
-//   pk := crypto.XPrvKey(privateKey)
-//   publicKey := pk.PubKey()
-// 
-// }

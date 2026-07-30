@@ -10,7 +10,7 @@ func main() {
   if err != nil { panic(err) }
   fmt.Println(len(privateKey))
   
-  vkey, err := psl.MakePublicKey(privateKey[:32])
+  vkey, err := psl.GetPublicKey(privateKey[:32])
   if err != nil { panic(err) }
   fmt.Println(len(vkey))
   
@@ -25,7 +25,7 @@ func main() {
   fmt.Println(addrB)
   fmt.Println(psl.IsValidAddress(addrB))
   
-  publicKey, err := psl.MakePublicKey(privateKey[:32])
+  publicKey, err := psl.GetPublicKey(privateKey[:32])
   if err != nil { panic(err) }
   
   value, err := psl.AddressBelongsToPubKey(addr, publicKey)
