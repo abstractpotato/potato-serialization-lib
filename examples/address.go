@@ -14,14 +14,14 @@ func main() {
   if err != nil { panic(err) }
   fmt.Println(len(vkey))
   
-  addr, err := psl.GenerateEnterpriseAddr(privateKey, true)
+  addr, err := psl.GenerateEnterpriseAddr(privateKey, false)
   if err != nil { panic(err) }
   fmt.Println(addr)
   fmt.Println(psl.IsValidAddress(addr))
   
   stakeKey, err := psl.GenerateKeys("")
   if err != nil { panic(err) }
-  addrB, err := psl.GenerateBaseAddr(privateKey, stakeKey, true)
+  addrB, err := psl.GenerateBaseAddr(privateKey, stakeKey, false)
   fmt.Println(addrB)
   fmt.Println(psl.IsValidAddress(addrB))
   
