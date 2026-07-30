@@ -15,3 +15,4 @@
 - Moved `addr` from `TxHeader` to Transaction Outputs and renamed `from`
 - reduced import complexity
 - Bech32 integration
+- Shelley address support (extended/base)
