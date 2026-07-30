@@ -51,9 +51,7 @@ func Sign(skey, message []byte) ([]byte, error) {
 }
 
 func MakePublicKey(kL []byte) ([]byte, error) {
-	if len(kL) != 32 {
-		return nil, errors.New("kL must be 32 bytes")
-	}
+	if len(kL) != 32 { return nil, errors.New("kL must be 32 bytes") }
 
   padded := make([]byte, 64)
   copy(padded[:32], kL)
