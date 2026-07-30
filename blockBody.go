@@ -9,8 +9,8 @@ import(
 type BlockBody struct {
   ID           uint          `cbor:"0,keyasint" json:"id"`
   Network      uint          `cbor:"1,keyasint" json:"network"`
-  PreviousHash string        `cbor:"2,keyasint" json:"previousHash"`
-  VRF          string        `cbor:"3,keyasint" json:"vrf"`
+  PreviousHash string        `cbor:"2,keyasint,omitempty" json:"previousHash,omitempty"`
+  VRF          string        `cbor:"3,keyasint,omitempty" json:"vrf,omitempty"`
   Epoch        uint          `cbor:"4,keyasint" json:"epoch"`
   Slot         uint          `cbor:"5,keyasint" json:"slot"`
   Transactions []Transaction `cbor:"6,keyasint,toarray,omitempty" json:"transactions,omitempty"`

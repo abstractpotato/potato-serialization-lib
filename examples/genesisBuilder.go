@@ -14,11 +14,15 @@ func GetPrivateKey() []byte {
 
 func main() {
   privateKey := GetPrivateKey()
-
+  addr, err := psl.GenerateEnterpriseAddr(privateKey, true)
+  if err != nil { panic(err) }
+  publicKey, err := psl.GetPublicKey(privateKey[:32])
+  if err != nil { panic(err) }
+  
   // initital protocol parameters
   params := psl.NewParams()
   params.Network = 0
-  params.MaxBlockHeaderSize = 1100 // 128 bytes
+  params.MaxBlockHeaderSize = 172 // 128 bytes
   params.MaxBlockBodySize = 4000000 // 4 MB or ~15k simple transactions
   params.MaxTxSize = 4000 // 4 KB
   params.TxFeePerByte = 430
@@ -29,8 +33,8 @@ func main() {
 
   // initial node certificate
   cert := psl.NewCertificate()
-  cert.RequestTx = "genesis"
-  cert.RewardAddr = "genesis"
+  cert.RewardAddr = addr
+  cert.PublicKey = publicKey
   cert.AddRelay("0.0.0.0:5001")
   cert.AddRelay("0.0.0.0:5002")
   cert.Status = 1
@@ -46,7 +50,7 @@ func main() {
   block.Hash()
 
   start := time.Now()
-  err := block.Sign(privateKey)
+  err = block.Sign(privateKey)
   if err != nil { panic(err) }
   fmt.Printf("Signature took %s\n", time.Since(start))
 

@@ -7,9 +7,9 @@ import(
 )
 
 type Certificate struct {
-  RequestTx  string   `cbor:"0,keyasint" json:"requestTx"`
+  RequestTx  string   `cbor:"0,keyasint,omitempty" json:"requestTx,omitempty"`
   RewardAddr string   `cbor:"1,keyasint" json:"rewardAddr"`
-  VKey       []byte   `cbor:"2,keyasint" json:"vkey"`
+  PublicKey  []byte   `cbor:"2,keyasint" json:"publicKey"`
   Relays     []string `cbor:"3,keyasint,toarray" json:"relays"`
   Status     uint     `cbor:"4,keyasint" json:"status"`
 }
