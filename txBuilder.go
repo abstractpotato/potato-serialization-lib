@@ -67,20 +67,16 @@ func (builder *TxBuilder) Verify() bool {
   return builder.Tx.Verify()
 }
 
-func (builder *TxBuilder) SetSender(addr string) {
-  builder.Tx.SetSender(addr)
+func (builder *TxBuilder) AddSimpleOutput(output SimpleOutput) {
+  builder.Tx.AddSimpleOutput(output)
 }
 
-func (builder *TxBuilder) SetSimpleOutput(output *SimpleOutput) {
-  builder.Tx.Body.SimpleOutput = output
+func (builder *TxBuilder) AddMultiOutput(output MultiOutput) {
+  builder.Tx.AddMultiOutput(output)
 }
 
-func (builder *TxBuilder) SetMultiAssetOutput(output *MultiAssetOutput) {
-  builder.Tx.Body.MultiAssetOutput = output
-}
-
-func (builder *TxBuilder) SetMultiAddrOutput(output *MultiAddrOutput) {
-  builder.Tx.Body.MultiAddrOutput = output
+func (builder *TxBuilder) SetAirDropOutput(output *AirDropOutput) {
+  builder.Tx.SetAirDropOutput(output)
 }
 
 func (builder *TxBuilder) SetRequest(request *Request) {
