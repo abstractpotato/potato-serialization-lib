@@ -47,6 +47,7 @@ func GenerateBaseAddr(privateKey, stakeKey []byte, mainnet bool) (string, error)
   
   stakeCred, err := cardano.NewKeyCredential(sk.PubKey())
   if err != nil { return "", err }
+  
   if mainnet {
     addr, err := cardano.NewBaseAddress(cardano.Mainnet, paymentCred, stakeCred)
     return addr.Bech32(), err
