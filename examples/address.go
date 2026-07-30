@@ -24,4 +24,15 @@ func main() {
   addrB, err := psl.GenerateBaseAddr(privateKey, stakeKey, true)
   fmt.Println(addrB)
   fmt.Println(psl.IsValidAddress(addrB))
+  
+  publicKey, err := psl.MakePublicKey(privateKey[:32])
+  if err != nil { panic(err) }
+  
+  value, err := psl.AddressBelongsToPubKey(addr, publicKey)
+  if err != nil { panic(err) }
+  fmt.Println(value)
+  
+  valueB, err := psl.AddressBelongsToPubKey(addrB, publicKey)
+  if err != nil { panic(err) }
+  fmt.Println(valueB)
 }

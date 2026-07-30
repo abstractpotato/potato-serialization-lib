@@ -1,6 +1,7 @@
 package psl
 
 import (
+  "bytes"
 	"crypto/rand"
   "github.com/echovl/cardano-go"
 	"github.com/echovl/cardano-go/crypto"
@@ -51,7 +52,26 @@ func GenerateBaseAddr(privateKey, stakeKey []byte, mainnet bool) (string, error)
   return addr.Bech32(), err
 }
 
-func IsValidAddress(addr string) bool {
-  _, err := cardano.NewAddress(addr)
+func IsValidAddress(addrStr string) bool {
+  _, err := cardano.NewAddress(addrStr)
 	return err == nil
 }
+
+func AddressBelongsToPubKey(addrStr string, publicKey []byte) (bool, error) {
+  pk := crypto.PubKey(publicKey)
+  
+  addr, err := cardano.NewAddress(addrStr)
+  if err != nil { return false, err }
+  if addr.Payment.Type != cardano.KeyCredential { return false, nil }
+  
+  expected, err := pk.Hash()
+	if err != nil { return false, err }
+  
+  return bytes.Equal(addr.Payment.KeyHash, expected), nil
+}
+
+// func GetPublicKey(privateKey []byte) () {
+//   pk := crypto.XPrvKey(privateKey)
+//   publicKey := pk.PubKey()
+// 
+// }
