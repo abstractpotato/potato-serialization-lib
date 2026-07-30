@@ -7,17 +7,17 @@ import(
 )
 
 type TxBody struct {
-  From         string `cbor:"0,keyasint" json:"from"`
-  SimpleOutput     *SimpleOutput `cbor:"1,keyasint,omitempty" json:"simple_output,omitempty"`
+  From             string            `cbor:"0,keyasint" json:"from"`
+  SimpleOutput     *SimpleOutput     `cbor:"1,keyasint,omitempty" json:"simple_output,omitempty"`
   MultiAssetOutput *MultiAssetOutput `cbor:"2,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
-  MultiAddrOutput *MultiAddrOutput `cbor:"3,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
-  Request *Request `cbor:"4,keyasint,omitempty" json:"request,omitempty"`
-  Certificate *Certificate `cbor:"5,keyasint,omitempty" json:"certificate,omitempty"`
-  Data []TxData `cbor:"6,keyasint,toarray,omitempty" json:"data,omitempty"`
-  TTL uint `cbor:"7,keyasint,omitempty" json:"ttl,omitempty"`
-  Timestamp uint `cbor:"8,keyasint" json:"timestamp"`
-  Network uint `cbor:"9,keyasint" json:"network"`
-  Fee uint `cbor:"10,keyasint" json:"fee"`
+  MultiAddrOutput  *MultiAddrOutput  `cbor:"3,keyasint,omitempty" json:"multiAddrOutput,omitempty"`
+  Request          *Request          `cbor:"4,keyasint,omitempty" json:"request,omitempty"`
+  Certificate      *Certificate      `cbor:"5,keyasint,omitempty" json:"certificate,omitempty"`
+  Data             []TxData          `cbor:"6,keyasint,toarray,omitempty" json:"data,omitempty"`
+  TTL              uint              `cbor:"7,keyasint,omitempty" json:"ttl,omitempty"`
+  Timestamp        uint              `cbor:"8,keyasint" json:"timestamp"`
+  Network          uint              `cbor:"9,keyasint" json:"network"`
+  Fee              uint              `cbor:"10,keyasint" json:"fee"`
 }
 
 type TxData struct {
