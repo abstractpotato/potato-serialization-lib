@@ -2,9 +2,9 @@ package psl
 
 import (
   "bytes"
-	"crypto/rand"
+  "crypto/rand"
   "github.com/echovl/cardano-go"
-	"github.com/echovl/cardano-go/crypto"
+  "github.com/echovl/cardano-go/crypto"
 )
 
 func GenerateKeys(password string) ([]byte, error) {
