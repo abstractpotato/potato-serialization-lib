@@ -114,62 +114,61 @@ func (transaction *Transaction) Verify() bool {
   vkey := transaction.Header.Witness.PublicKey
   sig := transaction.Header.Witness.Signature
   if len(vkey) == 0 || len(sig) == 0 { return false }
-  
+
   cborBytes, err := transaction.Body.ToCBOR()
   if err != nil { return false }
-  
+
   // check simpleOutputs
   valid_simple := transaction.verifySimpleOutputAddr(vkey)
   if !valid_simple { return false }
-  
-  // // check multiOutputs
-  // valid_multi := transaction.verifyMultiOutputAddr(vkey)
-  // if !valid_multi { return false }
-  // 
-  // // check airdrop
-  // valid_airdrop := transaction.verifyAirDrop(vkey)
-  // if !valid_airdrop { return false }
-  
+
+  // check multiOutputs
+  valid_multi := transaction.verifyMultiOutputAddr(vkey)
+  if !valid_multi { return false }
+
+  // check airdrop
+  valid_airdrop := transaction.verifyAirDrop(vkey)
+  if !valid_airdrop { return false }
+
   hashBytes := blake2b.Sum256(cborBytes)
   return Verify(vkey, sig, hashBytes[:])
 }
 
 func (transaction *Transaction) verifySimpleOutputAddr(publicKey []byte) bool {
   if len(transaction.Body.SimpleOutputs) == 0 { return true }
-  
+
   for _, output := range transaction.Body.SimpleOutputs {
     valid_sender, err := AddrBelongsToPubKey(output.From, publicKey)
-    if err != nil { panic(err) }
     if err != nil || !valid_sender { return false }
     if !IsValidAddress(output.To) { return false }
   }
-  
+
   return true
 }
 
 func (transaction *Transaction) verifyMultiOutputAddr(publicKey []byte) bool {
   if len(transaction.Body.MultiOutputs) == 0 { return true }
-  
+
   for _, output := range transaction.Body.MultiOutputs {
     valid_sender, err := AddrBelongsToPubKey(output.From, publicKey)
     if err != nil || !valid_sender { return false }
-    if !IsValidAddress(output.To) { return false }  
+    if !IsValidAddress(output.To) { return false }
   }
-  
+
   return true
 }
 
 func (transaction *Transaction) verifyAirDrop(publicKey []byte) bool {
   if transaction.Body.AirDropOutput == nil { return true }
   if len(transaction.Body.AirDropOutput.To) == 0 { return false }
-  
+
   sender_addr := transaction.Body.AirDropOutput.From
   valid_sender, err := AddrBelongsToPubKey(sender_addr, publicKey)
   if err != nil || !valid_sender { return false }
-  
+
   for _, addr := range transaction.Body.AirDropOutput.To {
     if !IsValidAddress(addr) { return false }
   }
-  
+
   return true
 }
